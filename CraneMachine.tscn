@@ -1,0 +1,154 @@
+[gd_scene load_steps=19 format=3 uid="uid://dinq705c1nio0"]
+
+[ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
+[ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
+[ext_resource type="Texture2D" uid="uid://lr8ejdnq26sc" path="res://Asset/Crane_Main.png" id="3_fop12"]
+[ext_resource type="Texture2D" uid="uid://bkknqndlbm644" path="res://Asset/Crane_Glass.png" id="4_qpvyu"]
+[ext_resource type="Script" path="res://Scripts/CraneTrain.gd" id="5_u0b50"]
+[ext_resource type="Texture2D" uid="uid://dtarhum7svgbx" path="res://Asset/Crane_Game_Train.png" id="6_88asv"]
+[ext_resource type="Script" path="res://Scripts/CraneClaw.gd" id="7_yg7s0"]
+[ext_resource type="Texture2D" uid="uid://dn58egli7gupe" path="res://Asset/Crane_Game_Wire.png" id="8_wm0mi"]
+[ext_resource type="Texture2D" uid="uid://crrdxcc7r0u6" path="res://Asset/Crane_Game_ClawOpen.png" id="9_ydaeg"]
+[ext_resource type="Texture2D" uid="uid://3mmvs7sfu7x" path="res://Asset/Crane_Game_ClawGrab.png" id="10_td1wy"]
+[ext_resource type="Texture2D" uid="uid://clhu6vgb2l23g" path="res://Asset/Crane_Game_ClawNeutral.png" id="11_1cldk"]
+[ext_resource type="Texture2D" uid="uid://c61ug1tdo54me" path="res://Asset/Crane_Game_Box_A.png" id="12_1g3iw"]
+[ext_resource type="Texture2D" uid="uid://d1h7pu4moucrq" path="res://Asset/Crane_Game_Box_B.png" id="13_2m47i"]
+[ext_resource type="Texture2D" uid="uid://cc706nq3q2kjh" path="res://Asset/Crane_Game_Box_C.png" id="14_r0roq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qcgj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ydaeg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_td1wy")
+}],
+"loop": false,
+"name": &"ClawGrab",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_1cldk")
+}],
+"loop": false,
+"name": &"ClawIdle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ydaeg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_1cldk")
+}],
+"loop": false,
+"name": &"ClawNeutral",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_1cldk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ydaeg")
+}],
+"loop": false,
+"name": &"ClawOpen",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbr8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3suxs"]
+size = Vector2(50, 71)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iw5yq"]
+size = Vector2(66, 35)
+
+[node name="CraneMachine" type="Node2D"]
+script = ExtResource("1_eb7fx")
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(301, 172)
+texture = ExtResource("2_6flr6")
+metadata/_edit_lock_ = true
+
+[node name="Main" type="Sprite2D" parent="."]
+position = Vector2(301, 172)
+texture = ExtResource("3_fop12")
+metadata/_edit_lock_ = true
+
+[node name="Glass" type="Sprite2D" parent="Main"]
+texture = ExtResource("4_qpvyu")
+metadata/_edit_lock_ = true
+
+[node name="CraneTrain" type="Node2D" parent="."]
+position = Vector2(194, 108)
+script = ExtResource("5_u0b50")
+
+[node name="Sprite2D" type="Sprite2D" parent="CraneTrain"]
+texture = ExtResource("6_88asv")
+
+[node name="Marker2D" type="Marker2D" parent="CraneTrain"]
+position = Vector2(-1, 10)
+
+[node name="CraneClaw" type="Area2D" parent="CraneTrain"]
+position = Vector2(-1, 40)
+script = ExtResource("7_yg7s0")
+
+[node name="CraneWire" type="Sprite2D" parent="CraneTrain/CraneClaw"]
+texture_repeat = 2
+texture = ExtResource("8_wm0mi")
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+
+[node name="ClawSprite" type="AnimatedSprite2D" parent="CraneTrain/CraneClaw"]
+sprite_frames = SubResource("SpriteFrames_qcgj4")
+animation = &"ClawNeutral"
+frame = 1
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CraneTrain/CraneClaw"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_7vbr8")
+
+[node name="Box A" type="Area2D" parent="." groups=["box"]]
+position = Vector2(265, 251)
+
+[node name="Sprite2D" type="Sprite2D" parent="Box A"]
+texture = ExtResource("12_1g3iw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box A"]
+visible = false
+shape = SubResource("RectangleShape2D_3suxs")
+
+[node name="Box B" type="Area2D" parent="." groups=["box"]]
+position = Vector2(335, 251)
+
+[node name="Sprite2D" type="Sprite2D" parent="Box B"]
+texture = ExtResource("13_2m47i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box B"]
+visible = false
+shape = SubResource("RectangleShape2D_3suxs")
+
+[node name="Box C" type="Area2D" parent="." groups=["box"]]
+position = Vector2(405, 251)
+
+[node name="Sprite2D" type="Sprite2D" parent="Box C"]
+texture = ExtResource("14_r0roq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box C"]
+visible = false
+shape = SubResource("RectangleShape2D_3suxs")
+
+[node name="DropZone" type="Area2D" parent="."]
+position = Vector2(169, 251)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
+position = Vector2(23, 7.5)
+shape = SubResource("RectangleShape2D_iw5yq")
+
+[connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]
