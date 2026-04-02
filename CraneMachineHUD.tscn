@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://dai0otd40lasp"]
+
+[ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="1_hudbg"]
+
+[node name="CraneMachineHUD" type="CanvasLayer"]
+layer = 10
+
+[node name="HUDRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HUDBar" type="NinePatchRect" parent="HUDRoot"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -52.0
+offset_right = 280.0
+offset_bottom = -12.0
+grow_vertical = 0
+texture = ExtResource("1_hudbg")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 20
+patch_margin_bottom = 12
+
+[node name="Content" type="HBoxContainer" parent="HUDRoot/HUDBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="AurumIcon" type="Label" parent="HUDRoot/HUDBar/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
+theme_override_font_sizes/font_size = 16
+text = "◈"
+
+[node name="AurumLabel" type="Label" parent="HUDRoot/HUDBar/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
+theme_override_font_sizes/font_size = 16
+text = "0"
+metadata/node_id = "aurum_label"
+
+[node name="Separator" type="VSeparator" parent="HUDRoot/HUDBar/Content"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="StatusDot" type="ColorRect" parent="HUDRoot/HUDBar/Content"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.23, 0.36, 0.23, 1)
+metadata/node_id = "status_dot"
+
+[node name="StatusLabel" type="Label" parent="HUDRoot/HUDBar/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 13
+text = "Idle"
+metadata/node_id = "status_label"

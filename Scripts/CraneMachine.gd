@@ -1,7 +1,106 @@
 extends Node2D
 
+@export var session_cost: int = 1000
+@export var aurum: int = 2000
 
-func _on_drop_zone_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+var session_active: bool = false
+var is_empty: bool = false
+var has_played_once: bool = false
+var pending_session: bool = false
+
+signal session_started
+signal session_failed_no_aurum
+signal session_ended
+signal aurum_changed(new_amount)
+signal machine_empty
+
+@onready var train = $CraneTrain
+@onready var claw = $CraneTrain/CraneClaw
+@onready var empty_label = $Main/EmptyLabel
+@onready var popup = $CraneMachinePopup
+@onready var ui = $UI
+
+
+func _ready():
+	claw.grab_failed.connect(_on_grab_failed)
+	claw.box_dropped.connect(_on_box_dropped)
+
+	empty_label.visible = false
+	train.can_move = false
+
+	aurum_changed.emit(aurum)
+
+	popup.open(session_cost, aurum)
+
+func try_start_session() -> void:
+	if is_empty:
+		return
+	if aurum < session_cost:
+		session_failed_no_aurum.emit()
+		popup.show_warning()
+		return
+	
+	# Potong aurum untuk sesi pertama dari popup
+	aurum -= session_cost
+	aurum_changed.emit(aurum)
+	
+	session_active = true
+	has_played_once = true
+	train.can_move = true
+	session_started.emit()
+	popup.close()
+
+func end_session() -> void:
+	session_active = false
+	train.can_move = false
+	session_ended.emit()
+
+	await get_tree().process_frame
+	_check_boxes()
+
+	if is_empty:
+		# Box habis, tampilkan popup
+		popup.open(session_cost, aurum)
+	else:
+		# Masih ada box, set pending session (aurum dipotong saat train mulai gerak)
+		pending_session = true
+		train.can_move = true
+		popup.close()
+
+func start_pending_session() -> void:
+	if not pending_session:
+		return
+	
+	if aurum < session_cost:
+		session_failed_no_aurum.emit()
+		popup.show_warning()
+		popup.open(session_cost, aurum)
+		pending_session = false
+		train.can_move = false
+		return
+	
+	# Potong aurum saat train mulai bergerak
+	aurum -= session_cost
+	aurum_changed.emit(aurum)
+	
+	session_active = true
+	has_played_once = true
+	pending_session = false
+	session_started.emit()
+
+func _check_boxes() -> void:
+	var boxes = get_tree().get_nodes_in_group("box")
+	if boxes.size() == 0:
+		is_empty = true
+		empty_label.visible = true
+		machine_empty.emit()
+
+func _on_grab_failed():
+	end_session()
+
+func _on_box_dropped():
+	end_session()
+
+func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local_shape_index):
 	if area.is_in_group("box"):
 		area.queue_free()
-		print("masuk")

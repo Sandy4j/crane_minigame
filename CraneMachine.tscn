@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=28 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
 [ext_resource type="Texture2D" uid="uid://lr8ejdnq26sc" path="res://Asset/Crane_Main.png" id="3_fop12"]
 [ext_resource type="Texture2D" uid="uid://bkknqndlbm644" path="res://Asset/Crane_Glass.png" id="4_qpvyu"]
+[ext_resource type="Texture2D" uid="uid://ct1fhqjfc1s00" path="res://Asset/Crane_UI_Empty.png" id="5_g8f33"]
 [ext_resource type="Script" path="res://Scripts/CraneTrain.gd" id="5_u0b50"]
 [ext_resource type="Texture2D" uid="uid://dtarhum7svgbx" path="res://Asset/Crane_Game_Train.png" id="6_88asv"]
 [ext_resource type="Script" path="res://Scripts/CraneClaw.gd" id="7_yg7s0"]
@@ -14,6 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://c61ug1tdo54me" path="res://Asset/Crane_Game_Box_A.png" id="12_1g3iw"]
 [ext_resource type="Texture2D" uid="uid://d1h7pu4moucrq" path="res://Asset/Crane_Game_Box_B.png" id="13_2m47i"]
 [ext_resource type="Texture2D" uid="uid://cc706nq3q2kjh" path="res://Asset/Crane_Game_Box_C.png" id="14_r0roq"]
+[ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="15_cuckp"]
+[ext_resource type="Script" path="res://UI/UI.gd" id="16_e03ug"]
+[ext_resource type="FontFile" uid="uid://1m8t6fwto306" path="res://Asset/font/bistrobold.fnt" id="16_hhadh"]
+[ext_resource type="PackedScene" uid="uid://6uvblp3i1p43" path="res://UI/CraneMachinePopup.tscn" id="18_gfoak"]
+[ext_resource type="Script" path="res://UI/CraneMachinePopup.gd" id="20_v6juf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qcgj4"]
 animations = [{
@@ -62,21 +68,32 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbr8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3suxs"]
-size = Vector2(50, 71)
+size = Vector2(50, 22.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vf5m2"]
+size = Vector2(50, 22.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_36kft"]
+size = Vector2(50, 22.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iw5yq"]
 size = Vector2(66, 35)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vrbh8"]
+font = ExtResource("16_hhadh")
+font_size = 25
+font_color = Color(0.764706, 0.764706, 0.764706, 1)
 
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
 
 [node name="BG" type="Sprite2D" parent="."]
-position = Vector2(301, 172)
+position = Vector2(330, 172)
 texture = ExtResource("2_6flr6")
 metadata/_edit_lock_ = true
 
 [node name="Main" type="Sprite2D" parent="."]
-position = Vector2(301, 172)
+position = Vector2(330, 172)
 texture = ExtResource("3_fop12")
 metadata/_edit_lock_ = true
 
@@ -84,9 +101,14 @@ metadata/_edit_lock_ = true
 texture = ExtResource("4_qpvyu")
 metadata/_edit_lock_ = true
 
+[node name="EmptyLabel" type="Sprite2D" parent="Main"]
+position = Vector2(10, 0)
+texture = ExtResource("5_g8f33")
+
 [node name="CraneTrain" type="Node2D" parent="."]
-position = Vector2(194, 108)
+position = Vector2(223, 108)
 script = ExtResource("5_u0b50")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="CraneTrain"]
 texture = ExtResource("6_88asv")
@@ -95,8 +117,11 @@ texture = ExtResource("6_88asv")
 position = Vector2(-1, 10)
 
 [node name="CraneClaw" type="Area2D" parent="CraneTrain"]
+z_index = 10
+z_as_relative = false
 position = Vector2(-1, 40)
 script = ExtResource("7_yg7s0")
+success_chance = 0.8
 
 [node name="CraneWire" type="Sprite2D" parent="CraneTrain/CraneClaw"]
 texture_repeat = 2
@@ -106,49 +131,130 @@ region_rect = Rect2(0, 0, 8, 8)
 
 [node name="ClawSprite" type="AnimatedSprite2D" parent="CraneTrain/CraneClaw"]
 sprite_frames = SubResource("SpriteFrames_qcgj4")
-animation = &"ClawNeutral"
+animation = &"ClawOpen"
 frame = 1
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CraneTrain/CraneClaw"]
-position = Vector2(0, 9)
+position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_7vbr8")
 
 [node name="Box A" type="Area2D" parent="." groups=["box"]]
-position = Vector2(265, 251)
+z_index = 1
+z_as_relative = false
+position = Vector2(294, 251)
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Box A"]
 texture = ExtResource("12_1g3iw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box A"]
 visible = false
+position = Vector2(0, -24.25)
 shape = SubResource("RectangleShape2D_3suxs")
 
 [node name="Box B" type="Area2D" parent="." groups=["box"]]
-position = Vector2(335, 251)
+z_index = 1
+z_as_relative = false
+position = Vector2(364, 251)
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Box B"]
 texture = ExtResource("13_2m47i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box B"]
 visible = false
-shape = SubResource("RectangleShape2D_3suxs")
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_vf5m2")
 
 [node name="Box C" type="Area2D" parent="." groups=["box"]]
-position = Vector2(405, 251)
+z_index = 1
+z_as_relative = false
+position = Vector2(434, 251)
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Box C"]
 texture = ExtResource("14_r0roq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box C"]
 visible = false
-shape = SubResource("RectangleShape2D_3suxs")
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_36kft")
 
 [node name="DropZone" type="Area2D" parent="."]
-position = Vector2(169, 251)
+position = Vector2(198, 251)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
-position = Vector2(23, 7.5)
+position = Vector2(24, 66)
 shape = SubResource("RectangleShape2D_iw5yq")
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("16_e03ug")
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HUDBar" type="TextureRect" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -376.0
+offset_top = 296.0
+offset_right = -108.0
+offset_bottom = 355.0
+grow_horizontal = 0
+texture = ExtResource("15_cuckp")
+
+[node name="Content" type="HBoxContainer" parent="UI/Control/HUDBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="AurumIcon" type="Label" parent="UI/Control/HUDBar/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
+theme_override_font_sizes/font_size = 16
+text = "◈"
+
+[node name="AurumLabel" type="Label" parent="UI/Control/HUDBar/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
+theme_override_font_sizes/font_size = 16
+text = "0"
+metadata/node_id = "aurum_label"
+
+[node name="StatusDot" type="ColorRect" parent="UI/Control/HUDBar/Content"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.23, 0.36, 0.23, 1)
+metadata/node_id = "status_dot"
+
+[node name="StatusLabel" type="Label" parent="UI/Control/HUDBar/Content"]
+layout_mode = 2
+text = "Idle"
+label_settings = SubResource("LabelSettings_vrbh8")
+metadata/node_id = "status_label"
+
+[node name="CraneMachinePopup" parent="." instance=ExtResource("18_gfoak")]
+visible = false
+script = ExtResource("20_v6juf")
 
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]
