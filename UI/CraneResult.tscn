@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://dm3wo07cp488v"]
+
+[ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="1_bg"]
+[ext_resource type="Texture2D" uid="uid://ddu2qebl4iarr" path="res://Asset/font/ui_main_itemframe_imagebox.png" id="2_imgframe"]
+[ext_resource type="Texture2D" uid="uid://42kvbnoypryt" path="res://Asset/font/ui_popup_button_small.png" id="3_btn"]
+[ext_resource type="FontFile" uid="uid://dvaiuc32aidnv" path="res://Asset/font/bistrobits.fnt" id="4_oufb1"]
+[ext_resource type="Script" path="res://UI/CraneResult.gd" id="4_script"]
+
+[node name="CraneResult" type="CanvasLayer"]
+layer = 30
+visible = false
+script = ExtResource("4_script")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="Panel" type="NinePatchRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -120.0
+offset_right = 90.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_bg")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 20
+patch_margin_bottom = 12
+
+[node name="VLayout" type="VBoxContainer" parent="Root/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ImageFrame" type="TextureRect" parent="Root/Panel/VLayout"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_imgframe")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BoxImage" type="TextureRect" parent="Root/Panel/VLayout/ImageFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/node_id = "box_image"
+
+[node name="BoxName" type="Label" parent="Root/Panel/VLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87, 0.87, 0.87, 1)
+theme_override_fonts/font = ExtResource("4_oufb1")
+theme_override_font_sizes/font_size = 65
+text = "Box A"
+horizontal_alignment = 1
+metadata/node_id = "box_name"
+
+[node name="BackButton" type="TextureButton" parent="Root/Panel/VLayout"]
+custom_minimum_size = Vector2(100, 34)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_btn")
+stretch_mode = 0
+metadata/node_id = "back_button"
+
+[node name="BackLabel" type="Label" parent="Root/Panel/VLayout/BackButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("4_oufb1")
+theme_override_font_sizes/font_size = 50
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=29 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
@@ -20,6 +20,7 @@
 [ext_resource type="FontFile" uid="uid://1m8t6fwto306" path="res://Asset/font/bistrobold.fnt" id="16_hhadh"]
 [ext_resource type="PackedScene" uid="uid://6uvblp3i1p43" path="res://UI/CraneMachinePopup.tscn" id="18_gfoak"]
 [ext_resource type="Script" path="res://UI/CraneMachinePopup.gd" id="20_v6juf"]
+[ext_resource type="PackedScene" uid="uid://dm3wo07cp488v" path="res://UI/CraneResult.tscn" id="21_ptm1r"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qcgj4"]
 animations = [{
@@ -86,6 +87,7 @@ font_color = Color(0.764706, 0.764706, 0.764706, 1)
 
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
+aurum = 3000
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(330, 172)
@@ -256,5 +258,7 @@ metadata/node_id = "status_label"
 [node name="CraneMachinePopup" parent="." instance=ExtResource("18_gfoak")]
 visible = false
 script = ExtResource("20_v6juf")
+
+[node name="CraneResult" parent="." instance=ExtResource("21_ptm1r")]
 
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]

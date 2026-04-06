@@ -19,6 +19,7 @@ signal machine_empty
 @onready var empty_label = $Main/EmptyLabel
 @onready var popup = $CraneMachinePopup
 @onready var ui = $UI
+@onready var result = $CraneResult
 
 
 func _ready():
@@ -59,10 +60,8 @@ func end_session() -> void:
 	_check_boxes()
 
 	if is_empty:
-		# Box habis, tampilkan popup
 		popup.open(session_cost, aurum)
 	else:
-		# Masih ada box, set pending session (aurum dipotong saat train mulai gerak)
 		pending_session = true
 		train.can_move = true
 		popup.close()
@@ -103,4 +102,12 @@ func _on_box_dropped():
 
 func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local_shape_index):
 	if area.is_in_group("box"):
+		var item_texture: Texture2D = null
+		var item_name: String = area.name
+		var sprite = area.get_node_or_null("Sprite2D")
+		if sprite:
+			item_texture = sprite.texture
+
 		area.queue_free()
+
+		result.show_result(item_name, item_texture)

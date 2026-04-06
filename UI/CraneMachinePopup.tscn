@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://6uvblp3i1p43"]
+[gd_scene load_steps=4 format=3 uid="uid://6uvblp3i1p43"]
 
 [ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="1_popupbg"]
 [ext_resource type="Texture2D" uid="uid://42kvbnoypryt" path="res://Asset/font/ui_popup_button_small.png" id="2_btn"]
+[ext_resource type="FontFile" uid="uid://dvaiuc32aidnv" path="res://Asset/font/bistrobits.fnt" id="2_lvll0"]
 
 [node name="CraneMachinePopup" type="CanvasLayer"]
 layer = 20
@@ -70,21 +71,24 @@ text = "◈"
 [node name="CostValue" type="Label" parent="PopupRoot/Panel/VLayout/CostRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_fonts/font = ExtResource("2_lvll0")
+theme_override_font_sizes/font_size = 75
 text = "500"
 metadata/node_id = "cost_value"
 
 [node name="CostLabel" type="Label" parent="PopupRoot/Panel/VLayout/CostRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_fonts/font = ExtResource("2_lvll0")
+theme_override_font_sizes/font_size = 75
 text = "Aurum"
 
 [node name="WarningLabel" type="Label" parent="PopupRoot/Panel/VLayout"]
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.78, 0.31, 0.31, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_fonts/font = ExtResource("2_lvll0")
+theme_override_font_sizes/font_size = 50
 text = "Aurum tidak cukup!"
 horizontal_alignment = 1
 metadata/node_id = "warning_label"
@@ -108,10 +112,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -22.0
+offset_right = 24.0
+offset_bottom = 28.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_fonts/font = ExtResource("2_lvll0")
+theme_override_font_sizes/font_size = 75
 text = "EXIT"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -130,10 +139,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -21.0
+offset_right = 37.5
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.49, 0.81, 0.49, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_fonts/font = ExtResource("2_lvll0")
+theme_override_font_sizes/font_size = 75
 text = "START"
 horizontal_alignment = 1
 vertical_alignment = 1
