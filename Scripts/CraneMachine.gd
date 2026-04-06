@@ -23,15 +23,23 @@ signal machine_empty
 
 
 func _ready():
-	claw.grab_failed.connect(_on_grab_failed)
-	claw.box_dropped.connect(_on_box_dropped)
+	claw.grab_failed.connect(end_session)
+	claw.box_dropped.connect(end_session)
 
 	empty_label.visible = false
 	train.can_move = false
 
 	aurum_changed.emit(aurum)
-
 	popup.open(session_cost, aurum)
+
+
+## Aktivasi sesi: potong aurum, set state aktif, emit signal
+func _activate_session() -> void:
+	aurum -= session_cost
+	aurum_changed.emit(aurum)
+	session_active = true
+	has_played_once = true
+	session_started.emit()
 
 func try_start_session() -> void:
 	if is_empty:
@@ -40,15 +48,9 @@ func try_start_session() -> void:
 		session_failed_no_aurum.emit()
 		popup.show_warning()
 		return
-	
-	# Potong aurum untuk sesi pertama dari popup
-	aurum -= session_cost
-	aurum_changed.emit(aurum)
-	
-	session_active = true
-	has_played_once = true
+
+	_activate_session()
 	train.can_move = true
-	session_started.emit()
 	popup.close()
 
 func end_session() -> void:
@@ -66,10 +68,11 @@ func end_session() -> void:
 		train.can_move = true
 		popup.close()
 
+## Aktivasi sesi jika ada sesi yang pending
 func start_pending_session() -> void:
 	if not pending_session:
 		return
-	
+
 	if aurum < session_cost:
 		session_failed_no_aurum.emit()
 		popup.show_warning()
@@ -77,16 +80,11 @@ func start_pending_session() -> void:
 		pending_session = false
 		train.can_move = false
 		return
-	
-	# Potong aurum saat train mulai bergerak
-	aurum -= session_cost
-	aurum_changed.emit(aurum)
-	
-	session_active = true
-	has_played_once = true
-	pending_session = false
-	session_started.emit()
 
+	pending_session = false
+	_activate_session()
+
+## Cek apakah ada box yang kosong
 func _check_boxes() -> void:
 	var boxes = get_tree().get_nodes_in_group("box")
 	if boxes.size() == 0:
@@ -94,12 +92,7 @@ func _check_boxes() -> void:
 		empty_label.visible = true
 		machine_empty.emit()
 
-func _on_grab_failed():
-	end_session()
-
-func _on_box_dropped():
-	end_session()
-
+## Signal dari area drop zone
 func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local_shape_index):
 	if area.is_in_group("box"):
 		var item_texture: Texture2D = null
@@ -109,5 +102,4 @@ func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local
 			item_texture = sprite.texture
 
 		area.queue_free()
-
 		result.show_result(item_name, item_texture)

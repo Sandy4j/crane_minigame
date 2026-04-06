@@ -16,12 +16,13 @@ var movement_tween: Tween = null
 
 
 func _ready():
+	_return_to_drop_zone(false)
 	_refresh_box_targets()
-	_snap_to_selected_box(false)
-	
-	claw.box_dropped.connect(_on_box_dropped)
 
-func _process(delta):
+	claw.box_dropped.connect(_reset_after_session)
+	claw.grab_failed.connect(_reset_after_session)
+
+func _process(_delta):
 	if is_auto_moving:
 		return
 
@@ -34,14 +35,17 @@ func _process(delta):
 	if Input.is_action_just_pressed("grab"):
 		_trigger_drop()
 
+## Dipanggil saat tombol grab ditekan
 func _trigger_drop():
+	if not can_move or not crane_machine.session_active:
+		return
 	if claw.is_busy():
 		return
-
 	if claw.grabbed_box == null:
 		can_move = false
 		claw.drop()
 
+## Dipanggil saat claw berhasil grab box
 func on_claw_grabbed():
 	_stop_tween()
 	is_auto_moving = true
@@ -50,38 +54,48 @@ func on_claw_grabbed():
 		claw.release_box()
 	)
 
+
+## Dipanggil setelah sesi selesai, baik berhasil maupun gagal
 func on_claw_finished():
+	_reset_after_session()
+
+## Reset state saat sesi selesai
+func _reset_after_session() -> void:
 	can_move = true
 	has_deducted_for_session = false
-	_refresh_box_targets()
-	_snap_to_selected_box(false)
+	selected_index = -1
+	_return_to_drop_zone(true, func(): _refresh_box_targets())
 
-func _on_box_dropped():
-	can_move = true
-	has_deducted_for_session = false
-	_refresh_box_targets()
-	_snap_to_selected_box(false)
 
+## Potong aurum hanya sekali per gerakan awal box
+func _try_deduct_session() -> void:
+	if not has_deducted_for_session:
+		crane_machine.start_pending_session()
+		has_deducted_for_session = true
+
+## Pilih box berdasarkan posisi claw
 func _select_box(direction: int) -> void:
 	_refresh_box_targets()
 	if box_targets.is_empty():
 		return
 
 	if selected_index < 0:
-		selected_index = 0
+		selected_index = _find_initial_index(direction)
+		if selected_index < 0:
+			return
+		_try_deduct_session()
+		_snap_to_selected_box(true)
+		return
 
 	var new_index: int = clamp(selected_index + direction, 0, box_targets.size() - 1)
 	if new_index == selected_index:
 		return
 
-	if not has_deducted_for_session:
-		# Aurum dipotong saat mulai memilih posisi box.
-		crane_machine.start_pending_session()
-		has_deducted_for_session = true
-
+	_try_deduct_session()
 	selected_index = new_index
 	_snap_to_selected_box(true)
 
+## Refresh daftar box yang akan dipotong
 func _refresh_box_targets() -> void:
 	var boxes := get_tree().get_nodes_in_group("box")
 	box_targets.clear()
@@ -97,9 +111,29 @@ func _refresh_box_targets() -> void:
 		selected_index = -1
 		return
 
-	if selected_index < 0 or selected_index >= box_targets.size():
-		selected_index = _find_nearest_box_index()
+	if selected_index >= box_targets.size():
+		selected_index = box_targets.size() - 1
+	elif selected_index < -1:
+		selected_index = -1
 
+## Cari index box pertama yang sesuai dengan posisi claw
+func _find_initial_index(direction: int) -> int:
+	if box_targets.is_empty():
+		return -1
+
+	var claw_global_x: float = claw.global_position.x
+	if direction > 0:
+		for i in range(box_targets.size()):
+			if box_targets[i].global_position.x >= claw_global_x:
+				return i
+	elif direction < 0:
+		for i in range(box_targets.size() - 1, -1, -1):
+			if box_targets[i].global_position.x <= claw_global_x:
+				return i
+
+	return _find_nearest_box_index()
+
+## Cari index box terdekat
 func _find_nearest_box_index() -> int:
 	if box_targets.is_empty():
 		return -1
@@ -116,6 +150,7 @@ func _find_nearest_box_index() -> int:
 
 	return nearest_index
 
+## Snap ke posisi box yang dipilih
 func _snap_to_selected_box(use_tween: bool) -> void:
 	if selected_index < 0 or selected_index >= box_targets.size():
 		return
@@ -127,6 +162,17 @@ func _snap_to_selected_box(use_tween: bool) -> void:
 		_stop_tween()
 		position.x = target_x
 
+## Kembali ke posisi drop zone
+func _return_to_drop_zone(use_tween: bool, on_finished: Callable = Callable()) -> void:
+	if use_tween:
+		_tween_to_x(drop_zone_x, speed, on_finished)
+	else:
+		_stop_tween()
+		position.x = drop_zone_x
+		if on_finished.is_valid():
+			on_finished.call()
+
+## Fungsi untuk membuat tween ke posisi tertentu
 func _tween_to_x(target_x: float, move_speed: float, on_finished: Callable = Callable()) -> void:
 	_stop_tween()
 
@@ -145,10 +191,12 @@ func _tween_to_x(target_x: float, move_speed: float, on_finished: Callable = Cal
 	if on_finished.is_valid():
 		movement_tween.finished.connect(func(): on_finished.call(), CONNECT_ONE_SHOT)
 
+## Hentikan tween yang sedang berjalan
 func _stop_tween() -> void:
 	if movement_tween != null:
 		movement_tween.kill()
 		movement_tween = null
 
+## Cek apakah sedang ada tween yang berjalan 
 func _is_tweening() -> bool:
 	return movement_tween != null and movement_tween.is_running()

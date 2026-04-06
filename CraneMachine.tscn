@@ -87,7 +87,6 @@ font_color = Color(0.764706, 0.764706, 0.764706, 1)
 
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
-aurum = 3000
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(330, 172)
@@ -133,9 +132,7 @@ region_rect = Rect2(0, 0, 8, 8)
 
 [node name="ClawSprite" type="AnimatedSprite2D" parent="CraneTrain/CraneClaw"]
 sprite_frames = SubResource("SpriteFrames_qcgj4")
-animation = &"ClawOpen"
-frame = 1
-frame_progress = 1.0
+animation = &"ClawIdle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CraneTrain/CraneClaw"]
 position = Vector2(0, 13)
