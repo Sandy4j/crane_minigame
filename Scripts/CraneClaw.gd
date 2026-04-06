@@ -3,7 +3,7 @@ extends Area2D
 @export var drop_speed: float = 60.0
 @export var max_drop: float = 75.0
 
-@export var grab_offset: Vector2 = Vector2(0, 30)
+@export var grab_offset: Vector2 = Vector2(0, 33)
 @export_range(0.0, 1.0, 0.01) var success_chance: float = 0.82
 
 enum ClawState { IDLE, DROPPING, RETURNING, FAILING }
@@ -18,7 +18,7 @@ var _box_origin: Vector2
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var train_anchor: Marker2D = get_parent().get_node("Marker2D")
 
-const WIRE_BASE_HEIGHT: float = 1.0
+const WIRE_BASE_HEIGHT: float = 8.0
 
 signal box_dropped
 signal grab_failed
@@ -56,7 +56,7 @@ func _process(delta):
 func _update_wire():
 	var anchor_local = to_local(train_anchor.global_position)
 	var wire_length = abs(anchor_local.y) + WIRE_BASE_HEIGHT
-	wire.position = Vector2(anchor_local.x, anchor_local.y / 1.0)
+	wire.position = Vector2(anchor_local.x, anchor_local.y / 2.0)
 	wire.region_rect = Rect2(0, 0, wire.texture.get_width(), wire_length)
 
 func drop():
