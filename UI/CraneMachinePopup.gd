@@ -10,12 +10,12 @@ func _ready():
 	exit_button.pressed.connect(_on_exit_pressed)
 	visible = false
 
-func open(cost: int, current_aurum: int) -> void:
+func open(cost: int, current_aurum: int, machine_empty: bool = false) -> void:
 	cost_value.text = str(cost)
 	warning_label.visible = false
 
-	# Disable start button jika aurum tidak cukup
-	var can_play: bool = current_aurum >= cost
+	# Disable start button jika aurum tidak cukup atau mesin habis
+	var can_play: bool = current_aurum >= cost and not machine_empty
 	start_button.modulate.a = 1.0 if can_play else 0.45
 	start_button.disabled = not can_play
 

@@ -61,7 +61,6 @@ func on_claw_finished():
 
 ## Reset state saat sesi selesai
 func _reset_after_session() -> void:
-	can_move = true
 	has_deducted_for_session = false
 	selected_index = -1
 	_return_to_drop_zone(true, func(): _refresh_box_targets())

@@ -30,7 +30,7 @@ func _ready():
 	train.can_move = false
 
 	aurum_changed.emit(aurum)
-	popup.open(session_cost, aurum)
+	popup.open(session_cost, aurum, is_empty)
 
 
 ## Aktivasi sesi: potong aurum, set state aktif, emit signal
@@ -62,7 +62,10 @@ func end_session() -> void:
 	_check_boxes()
 
 	if is_empty:
-		popup.open(session_cost, aurum)
+		popup.open(session_cost, aurum, is_empty)
+	elif aurum < session_cost:
+		session_failed_no_aurum.emit()
+		popup.open(session_cost, aurum, is_empty)
 	else:
 		pending_session = true
 		train.can_move = true
@@ -76,7 +79,7 @@ func start_pending_session() -> void:
 	if aurum < session_cost:
 		session_failed_no_aurum.emit()
 		popup.show_warning()
-		popup.open(session_cost, aurum)
+		popup.open(session_cost, aurum, is_empty)
 		pending_session = false
 		train.can_move = false
 		return

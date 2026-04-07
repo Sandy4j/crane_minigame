@@ -33,7 +33,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ClawGrab",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -56,7 +56,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_1cldk")
+"texture": ExtResource("10_td1wy")
 }, {
 "duration": 1.0,
 "texture": ExtResource("9_ydaeg")
