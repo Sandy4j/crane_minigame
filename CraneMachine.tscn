@@ -147,6 +147,9 @@ metadata/_edit_lock_ = true
 [node name="Sprite2D" type="Sprite2D" parent="Box A"]
 texture = ExtResource("12_1g3iw")
 
+[node name="Marker2D" type="Marker2D" parent="Box A/Sprite2D"]
+position = Vector2(0, -50)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Box A"]
 visible = false
 position = Vector2(0, -24.25)
@@ -192,6 +195,7 @@ layer = 10
 script = ExtResource("16_e03ug")
 
 [node name="Control" type="Control" parent="UI"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -257,5 +261,6 @@ visible = false
 script = ExtResource("20_v6juf")
 
 [node name="CraneResult" parent="." instance=ExtResource("21_ptm1r")]
+visible = false
 
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]

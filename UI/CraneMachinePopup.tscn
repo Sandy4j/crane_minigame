@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://6uvblp3i1p43"]
+[gd_scene load_steps=5 format=3 uid="uid://6uvblp3i1p43"]
 
 [ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="1_popupbg"]
 [ext_resource type="Texture2D" uid="uid://42kvbnoypryt" path="res://Asset/font/ui_popup_button_small.png" id="2_btn"]
 [ext_resource type="FontFile" uid="uid://dvaiuc32aidnv" path="res://Asset/font/bistrobits.fnt" id="2_lvll0"]
+[ext_resource type="Shortcut" uid="uid://dprwit1ypomrf" path="res://shorcutUI.tres" id="3_4o0dj"]
 
 [node name="CraneMachinePopup" type="CanvasLayer"]
 layer = 20
 
 [node name="PopupRoot" type="Control" parent="."]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,6 +103,7 @@ alignment = 1
 [node name="ExitButton" type="TextureButton" parent="PopupRoot/Panel/VLayout/ButtonRow"]
 custom_minimum_size = Vector2(88, 34)
 layout_mode = 2
+shortcut = ExtResource("3_4o0dj")
 texture_normal = ExtResource("2_btn")
 stretch_mode = 0
 metadata/node_id = "exit_button"
@@ -128,6 +131,7 @@ vertical_alignment = 1
 [node name="StartButton" type="TextureButton" parent="PopupRoot/Panel/VLayout/ButtonRow"]
 custom_minimum_size = Vector2(88, 34)
 layout_mode = 2
+shortcut = ExtResource("3_4o0dj")
 texture_normal = ExtResource("2_btn")
 stretch_mode = 0
 metadata/node_id = "start_button"

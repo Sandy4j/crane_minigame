@@ -1,10 +1,11 @@
 extends Area2D
 
 @export var drop_speed: float = 60.0
-@export var max_drop: float = 75.0
+@export var max_drop: float = 65.0
 
-@export var grab_offset: Vector2 = Vector2(0, 33)
+@export var grab_offset: Vector2 = Vector2(0,35)
 @export_range(0.0, 1.0, 0.01) var success_chance: float = 0.82
+@export var open_anim_threshold: float = 45.0
 
 enum ClawState { IDLE, DROPPING, RETURNING, FAILING }
 
@@ -12,6 +13,7 @@ var state: ClawState = ClawState.IDLE
 var start_y: float
 var grabbed_box: Area2D = null
 var _box_origin: Vector2
+var _open_anim_played: bool = false
 
 @onready var wire: Sprite2D = $CraneWire
 @onready var anim: AnimatedSprite2D = $ClawSprite
@@ -35,6 +37,9 @@ func _process(delta):
 		ClawState.DROPPING:
 			position.y += drop_speed * delta
 			_update_wire()
+			if not _open_anim_played and position.y >= start_y + max_drop - open_anim_threshold:
+				anim.play("ClawOpen")
+				_open_anim_played = true
 			if position.y >= start_y + max_drop:
 				state = ClawState.IDLE
 				_try_grab()
@@ -60,7 +65,7 @@ func _update_wire():
 	wire.region_rect = Rect2(0, 0, wire.texture.get_width(), wire_length)
 
 func drop():
-	anim.play("ClawOpen")
+	_open_anim_played = false
 	state = ClawState.DROPPING
 
 func _try_grab():
@@ -70,13 +75,12 @@ func _try_grab():
 		_box_origin = grabbed_box.global_position
 
 		anim.play("ClawGrab")
-		var target_global := global_position + grab_offset
-		grabbed_box.reparent(self)
+		grabbed_box.reparent(self, true)
 
 		var tween = create_tween()
 		tween.set_ease(Tween.EASE_OUT)
 		tween.set_trans(Tween.TRANS_QUAD)
-		tween.tween_property(grabbed_box, "global_position", target_global, 0.15)
+		tween.tween_property(grabbed_box, "position", grab_offset, 0.15) 
 
 		if grabbed_box.has_node("CollisionShape2D"):
 			grabbed_box.get_node("CollisionShape2D").disabled = true

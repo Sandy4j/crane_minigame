@@ -8,10 +8,10 @@
 
 [node name="CraneResult" type="CanvasLayer"]
 layer = 30
-visible = false
 script = ExtResource("4_script")
 
 [node name="Root" type="Control" parent="."]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
