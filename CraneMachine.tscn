@@ -188,7 +188,7 @@ shape = SubResource("RectangleShape2D_36kft")
 position = Vector2(198, 251)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
-position = Vector2(23, 36)
+position = Vector2(23, 119)
 shape = SubResource("RectangleShape2D_iw5yq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="DropZone"]
