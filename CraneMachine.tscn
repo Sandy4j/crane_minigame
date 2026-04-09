@@ -33,7 +33,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ClawGrab",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -63,7 +63,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ClawOpen",
-"speed": 5.0
+"speed": 20.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbr8"]
@@ -111,6 +111,13 @@ position = Vector2(223, 108)
 script = ExtResource("5_u0b50")
 metadata/_edit_lock_ = true
 
+[node name="CraneWire" type="Sprite2D" parent="CraneTrain"]
+texture_repeat = 2
+position = Vector2(-1, 14)
+texture = ExtResource("8_wm0mi")
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+
 [node name="Sprite2D" type="Sprite2D" parent="CraneTrain"]
 texture = ExtResource("6_88asv")
 
@@ -123,12 +130,6 @@ z_as_relative = false
 position = Vector2(-1, 40)
 script = ExtResource("7_yg7s0")
 success_chance = 0.8
-
-[node name="CraneWire" type="Sprite2D" parent="CraneTrain/CraneClaw"]
-texture_repeat = 2
-texture = ExtResource("8_wm0mi")
-region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
 
 [node name="ClawSprite" type="AnimatedSprite2D" parent="CraneTrain/CraneClaw"]
 sprite_frames = SubResource("SpriteFrames_qcgj4")
@@ -187,8 +188,17 @@ shape = SubResource("RectangleShape2D_36kft")
 position = Vector2(198, 251)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
-position = Vector2(24, 66)
+position = Vector2(23, 36)
 shape = SubResource("RectangleShape2D_iw5yq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="DropZone"]
+
+[node name="ColorRect" type="ColorRect" parent="DropZone/CanvasLayer"]
+offset_left = 150.0
+offset_top = 292.0
+offset_right = 511.0
+offset_bottom = 360.0
+color = Color(0.298039, 0.298039, 0.298039, 1)
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 10
@@ -203,6 +213,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="HUDBar" type="TextureRect" parent="UI/Control"]
 layout_mode = 1

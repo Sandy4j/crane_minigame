@@ -39,6 +39,8 @@ func _process(_delta):
 func _trigger_drop():
 	if not can_move or not crane_machine.session_active:
 		return
+	if selected_index < 0:
+		return	
 	if claw.is_busy():
 		return
 	if claw.grabbed_box == null:

@@ -5,7 +5,7 @@ extends Area2D
 
 @export var grab_offset: Vector2 = Vector2(0,35)
 @export_range(0.0, 1.0, 0.01) var success_chance: float = 0.82
-@export var open_anim_threshold: float = 45.0
+@export var open_anim_threshold: float = 40.0
 
 enum ClawState { IDLE, DROPPING, RETURNING, FAILING }
 
@@ -15,7 +15,7 @@ var grabbed_box: Area2D = null
 var _box_origin: Vector2
 var _open_anim_played: bool = false
 
-@onready var wire: Sprite2D = $CraneWire
+@onready var wire: Sprite2D = $"../CraneWire"
 @onready var anim: AnimatedSprite2D = $ClawSprite
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var train_anchor: Marker2D = get_parent().get_node("Marker2D")
@@ -59,9 +59,10 @@ func _process(delta):
 
 ## Update wire berdasarkan posisi claw
 func _update_wire():
-	var anchor_local = to_local(train_anchor.global_position)
-	var wire_length = abs(anchor_local.y) + WIRE_BASE_HEIGHT
-	wire.position = Vector2(anchor_local.x, anchor_local.y / 2.0)
+	var anchor_global = train_anchor.global_position
+	var claw_global = global_position
+	var wire_length = abs(claw_global.y - anchor_global.y) + WIRE_BASE_HEIGHT
+	wire.position = wire.get_parent().to_local((anchor_global + claw_global) / 2.0)
 	wire.region_rect = Rect2(0, 0, wire.texture.get_width(), wire_length)
 
 func drop():
