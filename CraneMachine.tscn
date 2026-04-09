@@ -87,6 +87,7 @@ font_color = Color(0.764706, 0.764706, 0.764706, 1)
 
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
+success_chance = 0.8
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(330, 172)
@@ -129,7 +130,6 @@ z_index = 10
 z_as_relative = false
 position = Vector2(-1, 40)
 script = ExtResource("7_yg7s0")
-success_chance = 0.8
 
 [node name="ClawSprite" type="AnimatedSprite2D" parent="CraneTrain/CraneClaw"]
 sprite_frames = SubResource("SpriteFrames_qcgj4")
@@ -268,7 +268,6 @@ label_settings = SubResource("LabelSettings_vrbh8")
 metadata/node_id = "status_label"
 
 [node name="CraneMachinePopup" parent="." instance=ExtResource("18_gfoak")]
-visible = false
 script = ExtResource("20_v6juf")
 
 [node name="CraneResult" parent="." instance=ExtResource("21_ptm1r")]

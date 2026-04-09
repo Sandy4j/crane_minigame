@@ -4,7 +4,6 @@ extends Area2D
 @export var max_drop: float = 65.0
 
 @export var grab_offset: Vector2 = Vector2(0,35)
-@export_range(0.0, 1.0, 0.01) var success_chance: float = 0.82
 @export var open_anim_threshold: float = 40.0
 
 enum ClawState { IDLE, DROPPING, RETURNING, FAILING }
@@ -19,6 +18,7 @@ var _open_anim_played: bool = false
 @onready var anim: AnimatedSprite2D = $ClawSprite
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var train_anchor: Marker2D = get_parent().get_node("Marker2D")
+@onready var crane_machine = get_parent().get_parent()
 
 const WIRE_BASE_HEIGHT: float = 8.0
 
@@ -87,7 +87,7 @@ func _try_grab():
 			grabbed_box.get_node("CollisionShape2D").disabled = true
 		await get_tree().create_timer(0.2).timeout
 
-		if randf() <= success_chance:
+		if randf() <= crane_machine.success_chance:
 			state = ClawState.RETURNING
 		else:
 			_handle_fail()

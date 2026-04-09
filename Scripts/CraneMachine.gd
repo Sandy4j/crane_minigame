@@ -2,6 +2,7 @@ extends Node2D
 
 @export var session_cost: int = 1000
 @export var aurum: int = 2000
+@export_range(0.0, 1.0, 0.01) var success_chance: float = 0.82
 
 var session_active: bool = false
 var is_empty: bool = false
@@ -29,10 +30,35 @@ func _ready():
 	empty_label.visible = false
 	train.can_move = false
 
+	_load_config()
 	aurum_changed.emit(aurum)
 	popup.open(session_cost, aurum, is_empty)
 
+## Load konfigurasi dari file eksternal
+func _load_config() -> void:
+	var path := OS.get_executable_path().get_base_dir().path_join("config.json")
+	if not FileAccess.file_exists(path):
+		return
+	
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return
+	var data: Variant = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data is Dictionary:
+		return
 
+	if data.has("aurum"):
+		aurum = int(data["aurum"])
+		print("aurum")
+	if data.has("cost"):
+		session_cost = int(data["cost"])
+		print("cost")
+	if data.has("success_chance"):
+		success_chance = float(data["success_chance"])
+		print("chance")
+	print("config done")
+	
 ## Aktivasi sesi: potong aurum, set state aktif, emit signal
 func _activate_session() -> void:
 	aurum -= session_cost
@@ -67,9 +93,8 @@ func end_session() -> void:
 		session_failed_no_aurum.emit()
 		popup.open(session_cost, aurum, is_empty)
 	else:
-		pending_session = true
-		train.can_move = true
-		popup.close()
+		pending_session = false
+		popup.open(session_cost, aurum, is_empty)
 
 ## Aktivasi sesi jika ada sesi yang pending
 func start_pending_session() -> void:
