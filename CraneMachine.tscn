@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=39 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
@@ -7,8 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://ct1fhqjfc1s00" path="res://Asset/Crane_UI_Empty.png" id="5_g8f33"]
 [ext_resource type="Script" path="res://Scripts/CraneTrain.gd" id="5_u0b50"]
 [ext_resource type="Texture2D" uid="uid://dtarhum7svgbx" path="res://Asset/Crane_Game_Train.png" id="6_88asv"]
+[ext_resource type="Texture2D" uid="uid://dwsqdwim2uaf2" path="res://Asset/Crane_Game_Particle_Success.png" id="6_ny6c0"]
+[ext_resource type="Texture2D" uid="uid://s1ixqldu6n0u" path="res://Asset/Crane_Game_Particle_Success_Sparkle.png" id="7_mc0b0"]
 [ext_resource type="Script" path="res://Scripts/CraneClaw.gd" id="7_yg7s0"]
+[ext_resource type="Texture2D" uid="uid://fa145vmhk56e" path="res://Asset/Crane_Game_Particle_Failure_0000.png" id="8_smgh7"]
 [ext_resource type="Texture2D" uid="uid://dn58egli7gupe" path="res://Asset/Crane_Game_Wire.png" id="8_wm0mi"]
+[ext_resource type="Texture2D" uid="uid://l3i8i5p81p0i" path="res://Asset/Crane_Game_Particle_Failure_0001.png" id="9_ann7m"]
 [ext_resource type="Texture2D" uid="uid://crrdxcc7r0u6" path="res://Asset/Crane_Game_ClawOpen.png" id="9_ydaeg"]
 [ext_resource type="Texture2D" uid="uid://3mmvs7sfu7x" path="res://Asset/Crane_Game_ClawGrab.png" id="10_td1wy"]
 [ext_resource type="Texture2D" uid="uid://clhu6vgb2l23g" path="res://Asset/Crane_Game_ClawNeutral.png" id="11_1cldk"]
@@ -21,6 +25,36 @@
 [ext_resource type="PackedScene" uid="uid://6uvblp3i1p43" path="res://UI/CraneMachinePopup.tscn" id="18_gfoak"]
 [ext_resource type="Script" path="res://UI/CraneMachinePopup.gd" id="20_v6juf"]
 [ext_resource type="PackedScene" uid="uid://dm3wo07cp488v" path="res://UI/CraneResult.tscn" id="21_ptm1r"]
+[ext_resource type="PackedScene" uid="uid://b6x1wttgyi7q4" path="res://UI/CraneEmpty.tscn" id="22_3p82a"]
+[ext_resource type="Script" path="res://Scripts/VFXManager.gd" id="23_vfx01"]
+
+[sub_resource type="Curve" id="Curve_cl54m"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_0fhdx"]
+curve = SubResource("Curve_cl54m")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5px8l"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+gravity = Vector3(0, -98, 0)
+scale_curve = SubResource("CurveTexture_0fhdx")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_arpgf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_smgh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ann7m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qcgj4"]
 animations = [{
@@ -90,24 +124,54 @@ script = ExtResource("1_eb7fx")
 success_chance = 0.8
 
 [node name="BG" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(330, 172)
 texture = ExtResource("2_6flr6")
-metadata/_edit_lock_ = true
 
 [node name="Main" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(330, 172)
 texture = ExtResource("3_fop12")
-metadata/_edit_lock_ = true
 
 [node name="Glass" type="Sprite2D" parent="Main"]
 texture = ExtResource("4_qpvyu")
-metadata/_edit_lock_ = true
 
 [node name="EmptyLabel" type="Sprite2D" parent="Main"]
+visible = false
 position = Vector2(10, 0)
 texture = ExtResource("5_g8f33")
 
+[node name="VFXSucces" type="Node2D" parent="Main"]
+script = ExtResource("23_vfx01")
+
+[node name="Overlay" type="Sprite2D" parent="Main/VFXSucces"]
+visible = false
+z_index = 2
+position = Vector2(1, 25)
+texture = ExtResource("6_ny6c0")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Main/VFXSucces"]
+z_index = 3
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_5px8l")
+texture = ExtResource("7_mc0b0")
+lifetime = 0.4
+one_shot = true
+
+[node name="VFXFailure" type="Node2D" parent="Main/VFXSucces"]
+texture_filter = 1
+
+[node name="Overlay" type="AnimatedSprite2D" parent="Main/VFXSucces/VFXFailure"]
+visible = false
+z_index = 1
+position = Vector2(0, 2)
+sprite_frames = SubResource("SpriteFrames_arpgf")
+frame = 1
+frame_progress = 0.576744
+
 [node name="CraneTrain" type="Node2D" parent="."]
+texture_filter = 1
 position = Vector2(223, 108)
 script = ExtResource("5_u0b50")
 metadata/_edit_lock_ = true
@@ -139,47 +203,50 @@ animation = &"ClawIdle"
 position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_7vbr8")
 
-[node name="Box A" type="Area2D" parent="." groups=["box"]]
+[node name="Boxes" type="Node2D" parent="."]
+texture_filter = 1
+
+[node name="Box A" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
 position = Vector2(294, 251)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Box A"]
+[node name="Sprite2D" type="Sprite2D" parent="Boxes/Box A"]
 texture = ExtResource("12_1g3iw")
 
-[node name="Marker2D" type="Marker2D" parent="Box A/Sprite2D"]
+[node name="Marker2D" type="Marker2D" parent="Boxes/Box A/Sprite2D"]
 position = Vector2(0, -50)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box A"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/Box A"]
 visible = false
 position = Vector2(0, -24.25)
 shape = SubResource("RectangleShape2D_3suxs")
 
-[node name="Box B" type="Area2D" parent="." groups=["box"]]
+[node name="Box B" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
 position = Vector2(364, 251)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Box B"]
+[node name="Sprite2D" type="Sprite2D" parent="Boxes/Box B"]
 texture = ExtResource("13_2m47i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box B"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/Box B"]
 visible = false
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_vf5m2")
 
-[node name="Box C" type="Area2D" parent="." groups=["box"]]
+[node name="Box C" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
 position = Vector2(434, 251)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Box C"]
+[node name="Sprite2D" type="Sprite2D" parent="Boxes/Box C"]
 texture = ExtResource("14_r0roq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box C"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/Box C"]
 visible = false
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_36kft")
@@ -268,9 +335,13 @@ label_settings = SubResource("LabelSettings_vrbh8")
 metadata/node_id = "status_label"
 
 [node name="CraneMachinePopup" parent="." instance=ExtResource("18_gfoak")]
+visible = false
 script = ExtResource("20_v6juf")
 
 [node name="CraneResult" parent="." instance=ExtResource("21_ptm1r")]
+visible = false
+
+[node name="CraneEmpty" parent="." instance=ExtResource("22_3p82a")]
 visible = false
 
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]

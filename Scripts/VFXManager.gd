@@ -1,0 +1,49 @@
+extends Node2D
+
+## VFXManager - Mengelola efek visual untuk success dan failure
+
+signal vfx_finished
+
+@onready var success_overlay: Sprite2D = $Overlay
+@onready var success_particles: GPUParticles2D = $GPUParticles2D
+@onready var failure_overlay: AnimatedSprite2D = $VFXFailure/Overlay
+
+var is_playing: bool = false
+
+func _ready():
+	_hide_all_vfx()
+
+func play_success_vfx() -> void:
+	if is_playing:
+		return
+
+	is_playing = true
+	success_overlay.visible = true
+	success_particles.emitting = true
+	await get_tree().create_timer(1.5).timeout
+	
+	_hide_all_vfx()
+	is_playing = false
+	vfx_finished.emit()
+
+func play_failure_vfx() -> void:
+	if is_playing:
+		return
+
+	is_playing = true
+	
+	failure_overlay.visible = true
+	failure_overlay.frame = 0
+	failure_overlay.play("default")
+
+	await get_tree().create_timer(1.2).timeout
+	failure_overlay.visible = false
+
+	is_playing = false
+	vfx_finished.emit()
+
+
+func _hide_all_vfx() -> void:
+	success_overlay.visible = false
+	success_particles.emitting = false
+	failure_overlay.visible = false

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://6uvblp3i1p43"]
+[gd_scene load_steps=4 format=3 uid="uid://6uvblp3i1p43"]
 
 [ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="1_popupbg"]
 [ext_resource type="Texture2D" uid="uid://42kvbnoypryt" path="res://Asset/font/ui_popup_button_small.png" id="2_btn"]
 [ext_resource type="FontFile" uid="uid://dvaiuc32aidnv" path="res://Asset/font/bistrobits.fnt" id="2_lvll0"]
+
 [node name="CraneMachinePopup" type="CanvasLayer"]
 layer = 20
 
@@ -54,7 +55,7 @@ offset_right = -16.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 5
 alignment = 1
 
 [node name="CostRow" type="HBoxContainer" parent="PopupRoot/Panel/VLayout"]
@@ -84,12 +85,11 @@ theme_override_font_sizes/font_size = 75
 text = "Aurum"
 
 [node name="WarningLabel" type="Label" parent="PopupRoot/Panel/VLayout"]
-visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.78, 0.31, 0.31, 1)
 theme_override_fonts/font = ExtResource("2_lvll0")
 theme_override_font_sizes/font_size = 50
-text = "Aurum tidak cukup!"
+text = "Aurum not enough"
 horizontal_alignment = 1
 metadata/node_id = "warning_label"
 

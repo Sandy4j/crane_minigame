@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal result_closed
+
 @onready var box_image: TextureRect = $Root/Panel/VLayout/ImageFrame/BoxImage
 @onready var box_name: Label = $Root/Panel/VLayout/BoxName
 @onready var back_button: TextureButton = $Root/Panel/VLayout/BackButton
@@ -18,4 +20,4 @@ func show_result(item_name: String, item_texture: Texture2D) -> void:
 
 func _on_back_pressed() -> void:
 	visible = false
-	get_parent().end_session()
+	result_closed.emit()

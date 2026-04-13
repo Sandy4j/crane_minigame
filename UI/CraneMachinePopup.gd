@@ -10,9 +10,17 @@ func _ready():
 	exit_button.pressed.connect(_on_exit_pressed)
 	visible = false
 
-func open(cost: int, current_aurum: int, machine_empty: bool = false) -> void:
+func open() -> void:
+	var machine = get_parent()
+	var cost: int = machine.session_cost
+	var current_aurum: int = machine.aurum
+	var machine_empty: bool = machine.is_empty
+
 	cost_value.text = str(cost)
-	warning_label.visible = false
+
+	# Show warning only when aurum is not enough
+	var aurum_not_enough: bool = current_aurum < cost
+	warning_label.visible = aurum_not_enough
 
 	# Disable start button jika aurum tidak cukup atau mesin habis
 	var can_play: bool = current_aurum >= cost and not machine_empty

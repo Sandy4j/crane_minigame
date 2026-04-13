@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var session_cost: int = 1000
-@export var aurum: int = 2000
+@export var aurum: int = 5000
 @export_range(0.0, 1.0, 0.01) var success_chance: float = 0.82
 
 var session_active: bool = false
@@ -21,18 +21,21 @@ signal machine_empty
 @onready var popup = $CraneMachinePopup
 @onready var ui = $UI
 @onready var result = $CraneResult
+@onready var empty = $CraneEmpty
+@onready var vfx_manager = $Main/VFXSucces
 
 
 func _ready():
-	claw.grab_failed.connect(end_session)
-	claw.box_dropped.connect(end_session)
+	claw.grab_failed.connect(_on_grab_failed)
+	claw.box_dropped.connect(_on_box_dropped)
+	result.result_closed.connect(_on_result_closed)
 
 	empty_label.visible = false
 	train.can_move = false
 
 	_load_config()
 	aurum_changed.emit(aurum)
-	popup.open(session_cost, aurum, is_empty)
+	popup.open()
 
 ## Load konfigurasi dari file eksternal
 func _load_config() -> void:
@@ -83,18 +86,21 @@ func end_session() -> void:
 	session_active = false
 	train.can_move = false
 	session_ended.emit()
+	
+	if vfx_manager.is_playing:
+		await vfx_manager.vfx_finished
 
 	await get_tree().process_frame
 	_check_boxes()
 
 	if is_empty:
-		popup.open(session_cost, aurum, is_empty)
+		empty.open()
 	elif aurum < session_cost:
 		session_failed_no_aurum.emit()
-		popup.open(session_cost, aurum, is_empty)
+		popup.open()
 	else:
 		pending_session = false
-		popup.open(session_cost, aurum, is_empty)
+		popup.open()
 
 ## Aktivasi sesi jika ada sesi yang pending
 func start_pending_session() -> void:
@@ -104,7 +110,7 @@ func start_pending_session() -> void:
 	if aurum < session_cost:
 		session_failed_no_aurum.emit()
 		popup.show_warning()
-		popup.open(session_cost, aurum, is_empty)
+		popup.open()
 		pending_session = false
 		train.can_move = false
 		return
@@ -130,4 +136,19 @@ func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local
 			item_texture = sprite.texture
 
 		area.queue_free()
+		vfx_manager.play_success_vfx()
+		await vfx_manager.vfx_finished
+		
 		result.show_result(item_name, item_texture)
+
+func _on_result_closed() -> void:
+	if session_active:
+		end_session()
+
+func _on_box_dropped() -> void:
+	pass
+
+func _on_grab_failed() -> void:
+	vfx_manager.play_failure_vfx()
+	end_session()
+
