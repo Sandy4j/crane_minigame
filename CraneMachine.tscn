@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=44 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
@@ -23,7 +23,9 @@
 [ext_resource type="Script" path="res://UI/UI.gd" id="16_e03ug"]
 [ext_resource type="FontFile" uid="uid://1m8t6fwto306" path="res://Asset/font/bistrobold.fnt" id="16_hhadh"]
 [ext_resource type="PackedScene" uid="uid://6uvblp3i1p43" path="res://UI/CraneMachinePopup.tscn" id="18_gfoak"]
+[ext_resource type="Script" path="res://Scripts/Boxes.gd" id="18_wre2g"]
 [ext_resource type="Script" path="res://UI/CraneMachinePopup.gd" id="20_v6juf"]
+[ext_resource type="Shader" path="res://Box_Highlight.gdshader" id="20_x5xuc"]
 [ext_resource type="PackedScene" uid="uid://dm3wo07cp488v" path="res://UI/CraneResult.tscn" id="21_ptm1r"]
 [ext_resource type="PackedScene" uid="uid://b6x1wttgyi7q4" path="res://UI/CraneEmpty.tscn" id="22_3p82a"]
 [ext_resource type="Script" path="res://Scripts/VFXManager.gd" id="23_vfx01"]
@@ -102,11 +104,38 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbr8"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kbavm"]
+shader = ExtResource("20_x5xuc")
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/frequency = 0.35
+shader_parameter/highlight_speed = 6.0
+shader_parameter/highlight_width = 15.0
+shader_parameter/highlight_opacity = 1.0
+shader_parameter/active = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3suxs"]
 size = Vector2(50, 22.5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sjhhi"]
+shader = ExtResource("20_x5xuc")
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/frequency = 0.35
+shader_parameter/highlight_speed = 6.0
+shader_parameter/highlight_width = 15.0
+shader_parameter/highlight_opacity = 0.5
+shader_parameter/active = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf5m2"]
 size = Vector2(50, 22.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ai6rc"]
+shader = ExtResource("20_x5xuc")
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/frequency = 0.35
+shader_parameter/highlight_speed = 6.0
+shader_parameter/highlight_width = 15.0
+shader_parameter/highlight_opacity = 0.3
+shader_parameter/active = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36kft"]
 size = Vector2(50, 22.5)
@@ -205,48 +234,52 @@ shape = SubResource("RectangleShape2D_7vbr8")
 
 [node name="Boxes" type="Node2D" parent="."]
 texture_filter = 1
+script = ExtResource("18_wre2g")
 
-[node name="Box A" type="Area2D" parent="Boxes" groups=["box"]]
+[node name="BoxA" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
 position = Vector2(294, 251)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Boxes/Box A"]
+[node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxA"]
+material = SubResource("ShaderMaterial_kbavm")
 texture = ExtResource("12_1g3iw")
 
-[node name="Marker2D" type="Marker2D" parent="Boxes/Box A/Sprite2D"]
+[node name="Marker2D" type="Marker2D" parent="Boxes/BoxA/Sprite2D"]
 position = Vector2(0, -50)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/Box A"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/BoxA"]
 visible = false
 position = Vector2(0, -24.25)
 shape = SubResource("RectangleShape2D_3suxs")
 
-[node name="Box B" type="Area2D" parent="Boxes" groups=["box"]]
+[node name="BoxB" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
 position = Vector2(364, 251)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Boxes/Box B"]
+[node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxB"]
+material = SubResource("ShaderMaterial_sjhhi")
 texture = ExtResource("13_2m47i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/Box B"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/BoxB"]
 visible = false
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_vf5m2")
 
-[node name="Box C" type="Area2D" parent="Boxes" groups=["box"]]
+[node name="BoxC" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
 position = Vector2(434, 251)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Boxes/Box C"]
+[node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxC"]
+material = SubResource("ShaderMaterial_ai6rc")
 texture = ExtResource("14_r0roq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/Box C"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/BoxC"]
 visible = false
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_36kft")

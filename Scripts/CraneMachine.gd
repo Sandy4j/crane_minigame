@@ -23,13 +23,15 @@ signal machine_empty
 @onready var result = $CraneResult
 @onready var empty = $CraneEmpty
 @onready var vfx_manager = $Main/VFXSucces
+@onready var boxes = $Boxes
 
 
 func _ready():
 	claw.grab_failed.connect(_on_grab_failed)
 	claw.box_dropped.connect(_on_box_dropped)
 	result.result_closed.connect(_on_result_closed)
-
+	
+	boxes.randomize_boxes()
 	empty_label.visible = false
 	train.can_move = false
 
