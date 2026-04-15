@@ -144,6 +144,7 @@ func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local
 		result.show_result(item_name, item_texture)
 
 func _on_result_closed() -> void:
+	vfx_manager.stop_success_vfx()
 	if session_active:
 		end_session()
 
@@ -153,4 +154,3 @@ func _on_box_dropped() -> void:
 func _on_grab_failed() -> void:
 	vfx_manager.play_failure_vfx()
 	end_session()
-

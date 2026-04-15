@@ -110,7 +110,7 @@ shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/frequency = 0.35
 shader_parameter/highlight_speed = 6.0
 shader_parameter/highlight_width = 15.0
-shader_parameter/highlight_opacity = 1.0
+shader_parameter/highlight_opacity = 0.3
 shader_parameter/active = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3suxs"]
@@ -122,7 +122,7 @@ shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/frequency = 0.35
 shader_parameter/highlight_speed = 6.0
 shader_parameter/highlight_width = 15.0
-shader_parameter/highlight_opacity = 0.5
+shader_parameter/highlight_opacity = 0.3
 shader_parameter/active = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf5m2"]
@@ -150,7 +150,7 @@ font_color = Color(0.764706, 0.764706, 0.764706, 1)
 
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
-success_chance = 0.8
+success_chance = 0.5
 
 [node name="BG" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -186,7 +186,6 @@ amount = 4
 process_material = SubResource("ParticleProcessMaterial_5px8l")
 texture = ExtResource("7_mc0b0")
 lifetime = 0.4
-one_shot = true
 
 [node name="VFXFailure" type="Node2D" parent="Main/VFXSucces"]
 texture_filter = 1
@@ -201,9 +200,8 @@ frame_progress = 0.576744
 
 [node name="CraneTrain" type="Node2D" parent="."]
 texture_filter = 1
-position = Vector2(223, 108)
+position = Vector2(214, 96)
 script = ExtResource("5_u0b50")
-metadata/_edit_lock_ = true
 
 [node name="CraneWire" type="Sprite2D" parent="CraneTrain"]
 texture_repeat = 2
@@ -245,9 +243,6 @@ metadata/_edit_lock_ = true
 [node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxA"]
 material = SubResource("ShaderMaterial_kbavm")
 texture = ExtResource("12_1g3iw")
-
-[node name="Marker2D" type="Marker2D" parent="Boxes/BoxA/Sprite2D"]
-position = Vector2(0, -50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boxes/BoxA"]
 visible = false
@@ -305,6 +300,7 @@ layer = 10
 script = ExtResource("16_e03ug")
 
 [node name="Control" type="Control" parent="UI"]
+visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -320,9 +316,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -376.0
+offset_left = -269.0
 offset_top = 296.0
-offset_right = -108.0
+offset_right = -1.0
 offset_bottom = 355.0
 grow_horizontal = 0
 texture = ExtResource("15_cuckp")
@@ -366,6 +362,34 @@ layout_mode = 2
 text = "Idle"
 label_settings = SubResource("LabelSettings_vrbh8")
 metadata/node_id = "status_label"
+
+[node name="ControlButtons" type="HBoxContainer" parent="UI/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.0
+offset_top = 129.0
+offset_right = 29.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Button1" type="Button" parent="UI/Control/ControlButtons"]
+layout_mode = 2
+text = "Button 1"
+
+[node name="Button2" type="Button" parent="UI/Control/ControlButtons"]
+layout_mode = 2
+text = "Button 2"
+
+[node name="Button3" type="Button" parent="UI/Control/ControlButtons"]
+layout_mode = 2
+text = "Button 3"
 
 [node name="CraneMachinePopup" parent="." instance=ExtResource("18_gfoak")]
 visible = false

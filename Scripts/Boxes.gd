@@ -13,13 +13,8 @@ const BOX_TEXTURES = [
 	$BoxC,
 	]
 	
-func _get_random_box_textures() -> Array:
-	var pool = BOX_TEXTURES.duplicate()
-	pool.shuffle()
-	return pool.slice(0, 3)
-
 func randomize_boxes() -> void:
-	var new_textures = _get_random_box_textures()
+	var selected_texture = BOX_TEXTURES[randi() % BOX_TEXTURES.size()]
 	for i in range(boxes.size()):
 		if is_instance_valid(boxes[i]) and boxes[i].has_node("Sprite2D"):
-			boxes[i].get_node("Sprite2D").texture = new_textures[i]
+			boxes[i].get_node("Sprite2D").texture = selected_texture
