@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=72 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
@@ -22,13 +22,34 @@
 [ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="15_cuckp"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="16_e03ug"]
 [ext_resource type="FontFile" uid="uid://1m8t6fwto306" path="res://Asset/font/bistrobold.fnt" id="16_hhadh"]
-[ext_resource type="PackedScene" uid="uid://6uvblp3i1p43" path="res://UI/CraneMachinePopup.tscn" id="18_gfoak"]
 [ext_resource type="Script" path="res://Scripts/Boxes.gd" id="18_wre2g"]
+[ext_resource type="Shader" path="res://UI/Shader/Box_Highlight.gdshader" id="19_ajchn"]
 [ext_resource type="Script" path="res://UI/CraneMachinePopup.gd" id="20_v6juf"]
-[ext_resource type="Shader" path="res://Box_Highlight.gdshader" id="20_x5xuc"]
-[ext_resource type="PackedScene" uid="uid://dm3wo07cp488v" path="res://UI/CraneResult.tscn" id="21_ptm1r"]
-[ext_resource type="PackedScene" uid="uid://b6x1wttgyi7q4" path="res://UI/CraneEmpty.tscn" id="22_3p82a"]
 [ext_resource type="Script" path="res://Scripts/VFXManager.gd" id="23_vfx01"]
+[ext_resource type="Texture2D" uid="uid://hwfermc8grsr" path="res://Asset/montage/montage_blindbox_a_0000.png" id="28_3tn4s"]
+[ext_resource type="FontFile" uid="uid://dvaiuc32aidnv" path="res://Asset/font/bistrobits.fnt" id="28_rin62"]
+[ext_resource type="Texture2D" uid="uid://42kvbnoypryt" path="res://Asset/font/ui_popup_button_small.png" id="29_7xhpa"]
+[ext_resource type="Texture2D" uid="uid://xeuksubbwjqo" path="res://Asset/montage/montage_blindbox_a_0001.png" id="29_c4mwt"]
+[ext_resource type="Script" path="res://UI/CraneResult.gd" id="30_1lhj6"]
+[ext_resource type="Texture2D" uid="uid://bqaqxf7v7c0fo" path="res://Asset/montage/montage_blindbox_a_0002.png" id="30_oima2"]
+[ext_resource type="Texture2D" uid="uid://ddu2qebl4iarr" path="res://Asset/font/ui_main_itemframe_imagebox.png" id="31_av6m3"]
+[ext_resource type="Texture2D" uid="uid://cgttxflk3l3u4" path="res://Asset/montage/montage_blindbox_a_0003.png" id="31_lt7af"]
+[ext_resource type="Script" path="res://UI/montage_blindboxopen.gd" id="31_wif3s"]
+[ext_resource type="Script" path="res://UI/CraneEmpty.gd" id="32_3fryq"]
+[ext_resource type="Script" path="res://UI/ControlButtons.gd" id="32_ctrlb"]
+[ext_resource type="Texture2D" uid="uid://btdjeiwbe4sw7" path="res://Asset/montage/montage_blindbox_a_0004.png" id="32_nhm28"]
+[ext_resource type="Texture2D" uid="uid://dmdyv1cpbpo3d" path="res://Asset/montage/montage_blindbox_a_0005.png" id="33_0rnnr"]
+[ext_resource type="Texture2D" uid="uid://oyyohee5vh3e" path="res://Asset/montage/montage_blindbox_a_0006.png" id="34_7278x"]
+[ext_resource type="Texture2D" uid="uid://d13ccuijrbj78" path="res://Asset/montage/montage_blindbox_a_0007.png" id="35_dvd03"]
+[ext_resource type="Texture2D" uid="uid://cmgfnnw7a31jo" path="res://Asset/montage/montage_blindbox_a_0008.png" id="36_0rc4p"]
+[ext_resource type="Texture2D" uid="uid://bfvuubmiu0k5e" path="res://Asset/montage/montage_blindbox_a_0009.png" id="37_wtm4r"]
+[ext_resource type="Texture2D" uid="uid://b6gf5l2168ta8" path="res://Asset/montage/montage_blindbox_a_0010.png" id="38_vlq58"]
+[ext_resource type="Texture2D" uid="uid://csufx6lhlk0hp" path="res://Asset/montage/montage_blindbox_a_0011.png" id="39_204rr"]
+[ext_resource type="Texture2D" uid="uid://be3dtveoels" path="res://Asset/montage/montage_blindbox_a_0012.png" id="40_hj5se"]
+[ext_resource type="Texture2D" uid="uid://7bvtxjknhlri" path="res://Asset/montage/montage_blindbox_a_0013.png" id="41_j84mw"]
+[ext_resource type="Texture2D" uid="uid://dorku7u7li4wu" path="res://Asset/montage/montage_blindbox_a_0014.png" id="42_viavn"]
+[ext_resource type="Texture2D" uid="uid://buw07ghg0b5xu" path="res://Asset/montage/montage_blindbox_a_0015.png" id="43_vuwcb"]
+[ext_resource type="Shader" path="res://UI/Shader/speedlines.gdshader" id="45_ej7dx"]
 
 [sub_resource type="Curve" id="Curve_cl54m"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -105,7 +126,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbr8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kbavm"]
-shader = ExtResource("20_x5xuc")
+shader = ExtResource("19_ajchn")
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/frequency = 0.35
 shader_parameter/highlight_speed = 6.0
@@ -117,7 +138,7 @@ shader_parameter/active = true
 size = Vector2(50, 22.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sjhhi"]
-shader = ExtResource("20_x5xuc")
+shader = ExtResource("19_ajchn")
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/frequency = 0.35
 shader_parameter/highlight_speed = 6.0
@@ -129,7 +150,7 @@ shader_parameter/active = true
 size = Vector2(50, 22.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ai6rc"]
-shader = ExtResource("20_x5xuc")
+shader = ExtResource("19_ajchn")
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/frequency = 0.35
 shader_parameter/highlight_speed = 6.0
@@ -148,9 +169,121 @@ font = ExtResource("16_hhadh")
 font_size = 25
 font_color = Color(0.764706, 0.764706, 0.764706, 1)
 
+[sub_resource type="Animation" id="Animation_ta5cn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_m0doe"]
+resource_name = "default"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m5sfn"]
+_data = {
+"RESET": SubResource("Animation_ta5cn"),
+"default": SubResource("Animation_m0doe")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ombm6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("28_3tn4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_c4mwt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_oima2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_lt7af")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_nhm28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_0rnnr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_7278x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_dvd03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_0rc4p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_wtm4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_vlq58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_204rr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_hj5se")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_j84mw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_viavn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_vuwcb")
+}],
+"loop": true,
+"name": &"a",
+"speed": 5.0
+}]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mhyxd"]
+frequency = 0.0317
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u1wje"]
+generate_mipmaps = false
+as_normal_map = true
+bump_strength = 32.0
+noise = SubResource("FastNoiseLite_mhyxd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ft877"]
+shader = ExtResource("45_ej7dx")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_count = 2.0
+shader_parameter/line_density = 0.214
+shader_parameter/line_faloff = 0.286
+shader_parameter/mask_size = 0.448
+shader_parameter/mask_edge = 0.5
+shader_parameter/animation_speed = 20.0
+shader_parameter/noise = SubResource("NoiseTexture2D_u1wje")
+
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
-success_chance = 0.5
 
 [node name="BG" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -300,7 +433,6 @@ layer = 10
 script = ExtResource("16_e03ug")
 
 [node name="Control" type="Control" parent="UI"]
-visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -364,7 +496,6 @@ label_settings = SubResource("LabelSettings_vrbh8")
 metadata/node_id = "status_label"
 
 [node name="ControlButtons" type="HBoxContainer" parent="UI/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -378,27 +509,419 @@ offset_bottom = 169.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
+script = ExtResource("32_ctrlb")
 
-[node name="Button1" type="Button" parent="UI/Control/ControlButtons"]
+[node name="GrabButton" type="Button" parent="UI/Control/ControlButtons"]
 layout_mode = 2
-text = "Button 1"
+text = "Grab"
 
-[node name="Button2" type="Button" parent="UI/Control/ControlButtons"]
+[node name="LeftButton" type="Button" parent="UI/Control/ControlButtons"]
 layout_mode = 2
-text = "Button 2"
+text = "Left"
 
-[node name="Button3" type="Button" parent="UI/Control/ControlButtons"]
+[node name="RightButton" type="Button" parent="UI/Control/ControlButtons"]
 layout_mode = 2
-text = "Button 3"
+text = "Right"
 
-[node name="CraneMachinePopup" parent="." instance=ExtResource("18_gfoak")]
+[node name="Montage" type="CanvasLayer" parent="."]
+
+[node name="montage_blindboxopen" type="Node2D" parent="Montage"]
+z_index = 10
+position = Vector2(331, 171)
+script = ExtResource("31_wif3s")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Montage/montage_blindboxopen"]
+libraries = {
+"": SubResource("AnimationLibrary_m5sfn")
+}
+
+[node name="BGColor" type="ColorRect" parent="Montage/montage_blindboxopen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -119.0
+offset_top = -69.0
+offset_right = 121.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.711821, 0.210279, 0.482828, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Montage/montage_blindboxopen"]
+sprite_frames = SubResource("SpriteFrames_ombm6")
+animation = &"a"
+frame = 1
+
+[node name="Shader" type="ColorRect" parent="Montage/montage_blindboxopen"]
+material = SubResource("ShaderMaterial_ft877")
+offset_left = -119.0
+offset_top = -69.0
+offset_right = 121.0
+offset_bottom = 69.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Dimmer" type="ColorRect" parent="Montage"]
 visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+metadata/_edit_use_anchors_ = true
+
+[node name="PopupUI" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="PopupRoot" type="Control" parent="PopupUI"]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("20_v6juf")
 
-[node name="CraneResult" parent="." instance=ExtResource("21_ptm1r")]
-visible = false
+[node name="Dimmer" type="ColorRect" parent="PopupUI/PopupRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
 
-[node name="CraneEmpty" parent="." instance=ExtResource("22_3p82a")]
+[node name="Panel" type="NinePatchRect" parent="PopupUI/PopupRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -90.0
+offset_right = 110.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_cuckp")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 20
+patch_margin_bottom = 12
+
+[node name="VLayout" type="VBoxContainer" parent="PopupUI/PopupRoot/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 14.0
+offset_right = -16.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="CostRow" type="HBoxContainer" parent="PopupUI/PopupRoot/Panel/VLayout"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="CostIcon" type="Label" parent="PopupUI/PopupRoot/Panel/VLayout/CostRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
+theme_override_font_sizes/font_size = 18
+text = "◈"
+
+[node name="CostValue" type="Label" parent="PopupUI/PopupRoot/Panel/VLayout/CostRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.78, 0.42, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 75
+text = "500"
+metadata/node_id = "cost_value"
+
+[node name="CostLabel" type="Label" parent="PopupUI/PopupRoot/Panel/VLayout/CostRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 75
+text = "Aurum"
+
+[node name="WarningLabel" type="Label" parent="PopupUI/PopupRoot/Panel/VLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.31, 0.31, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 50
+text = "Aurum not enough"
+horizontal_alignment = 1
+metadata/node_id = "warning_label"
+
+[node name="ButtonRow" type="HBoxContainer" parent="PopupUI/PopupRoot/Panel/VLayout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="PopupUI/PopupRoot/Panel/VLayout/ButtonRow"]
+custom_minimum_size = Vector2(88, 34)
+layout_mode = 2
+texture_normal = ExtResource("29_7xhpa")
+stretch_mode = 0
+metadata/node_id = "exit_button"
+
+[node name="ExitLabel" type="Label" parent="PopupUI/PopupRoot/Panel/VLayout/ButtonRow/ExitButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -22.0
+offset_right = 24.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 75
+text = "EXIT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="TextureButton" parent="PopupUI/PopupRoot/Panel/VLayout/ButtonRow"]
+custom_minimum_size = Vector2(88, 34)
+layout_mode = 2
+texture_normal = ExtResource("29_7xhpa")
+stretch_mode = 0
+metadata/node_id = "start_button"
+
+[node name="StartLabel" type="Label" parent="PopupUI/PopupRoot/Panel/VLayout/ButtonRow/StartButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -21.0
+offset_right = 37.5
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.49, 0.81, 0.49, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 75
+text = "START"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResultRoot" type="Control" parent="PopupUI"]
 visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("30_1lhj6")
+
+[node name="Dimmer" type="ColorRect" parent="PopupUI/ResultRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="Panel" type="NinePatchRect" parent="PopupUI/ResultRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -120.0
+offset_right = 90.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_cuckp")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 20
+patch_margin_bottom = 12
+
+[node name="VLayout" type="VBoxContainer" parent="PopupUI/ResultRoot/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ImageFrame" type="TextureRect" parent="PopupUI/ResultRoot/Panel/VLayout"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("31_av6m3")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ItemImage" type="TextureRect" parent="PopupUI/ResultRoot/Panel/VLayout/ImageFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+metadata/node_id = "box_image"
+
+[node name="ItemName" type="Label" parent="PopupUI/ResultRoot/Panel/VLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87, 0.87, 0.87, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 65
+text = "Box A"
+horizontal_alignment = 1
+metadata/node_id = "box_name"
+
+[node name="BackButton" type="TextureButton" parent="PopupUI/ResultRoot/Panel/VLayout"]
+custom_minimum_size = Vector2(100, 34)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("29_7xhpa")
+stretch_mode = 0
+metadata/node_id = "back_button"
+
+[node name="BackLabel" type="Label" parent="PopupUI/ResultRoot/Panel/VLayout/BackButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 50
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EmptyRoot" type="Control" parent="PopupUI"]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_3fryq")
+
+[node name="Dimmer" type="ColorRect" parent="PopupUI/EmptyRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="NinePatchRect" parent="PopupUI/EmptyRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -60.0
+offset_right = 110.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_cuckp")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 20
+patch_margin_bottom = 12
+
+[node name="VLayout" type="VBoxContainer" parent="PopupUI/EmptyRoot/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 14.0
+offset_right = -16.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="PopupUI/EmptyRoot/Panel/VLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.31, 0.31, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 50
+text = "This machine is empty"
+horizontal_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="PopupUI/EmptyRoot/Panel/VLayout"]
+custom_minimum_size = Vector2(88, 34)
+layout_mode = 2
+texture_normal = ExtResource("29_7xhpa")
+stretch_mode = 0
+
+[node name="ExitLabel" type="Label" parent="PopupUI/EmptyRoot/Panel/VLayout/ExitButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -22.0
+offset_right = 24.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_fonts/font = ExtResource("28_rin62")
+theme_override_font_sizes/font_size = 75
+text = "EXIT"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]
+[connection signal="pressed" from="UI/Control/ControlButtons/GrabButton" to="UI/Control/ControlButtons" method="_on_grab_button_pressed"]
+[connection signal="pressed" from="UI/Control/ControlButtons/LeftButton" to="UI/Control/ControlButtons" method="_on_left_button_pressed"]
+[connection signal="pressed" from="UI/Control/ControlButtons/RightButton" to="UI/Control/ControlButtons" method="_on_right_button_pressed"]

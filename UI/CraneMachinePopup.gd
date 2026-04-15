@@ -1,17 +1,19 @@
-extends CanvasLayer
+extends Control
 
-@onready var cost_value: Label = $PopupRoot/Panel/VLayout/CostRow/CostValue
-@onready var warning_label: Label = $PopupRoot/Panel/VLayout/WarningLabel
-@onready var start_button: TextureButton = $PopupRoot/Panel/VLayout/ButtonRow/StartButton
-@onready var exit_button: TextureButton = $PopupRoot/Panel/VLayout/ButtonRow/ExitButton
+@onready var cost_value: Label = $Panel/VLayout/CostRow/CostValue
+@onready var warning_label: Label = $Panel/VLayout/WarningLabel
+@onready var start_button: TextureButton = $Panel/VLayout/ButtonRow/StartButton
+@onready var exit_button: TextureButton = $Panel/VLayout/ButtonRow/ExitButton
+
+var _machine: CraneMachine
 
 func _ready():
 	start_button.pressed.connect(_on_start_pressed)
 	exit_button.pressed.connect(_on_exit_pressed)
 	visible = false
 
-func open() -> void:
-	var machine = get_parent()
+func open(machine: CraneMachine) -> void:
+	_machine = machine
 	var cost: int = machine.session_cost
 	var current_aurum: int = machine.aurum
 	var machine_empty: bool = machine.is_empty
@@ -36,7 +38,7 @@ func show_warning() -> void:
 	warning_label.visible = true
 
 func _on_start_pressed() -> void:
-	get_parent().try_start_session()
+	_machine.try_start_session()
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()

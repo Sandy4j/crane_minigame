@@ -1,6 +1,6 @@
-extends CanvasLayer
+extends Control
 
-@onready var exit_button: TextureButton = $EmptyRoot/Panel/VLayout/ExitButton
+@onready var exit_button: TextureButton = $Panel/VLayout/ExitButton
 
 func _ready():
 	exit_button.pressed.connect(_on_exit_pressed)
