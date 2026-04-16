@@ -1,22 +1,30 @@
-[gd_scene load_steps=72 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=80 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
 [ext_resource type="Texture2D" uid="uid://lr8ejdnq26sc" path="res://Asset/Crane_Main.png" id="3_fop12"]
 [ext_resource type="Texture2D" uid="uid://bkknqndlbm644" path="res://Asset/Crane_Glass.png" id="4_qpvyu"]
+[ext_resource type="Texture2D" uid="uid://c0viccrrfqsep" path="res://Asset/New folder/Crane_Main_Outer.png" id="4_yny2s"]
 [ext_resource type="Texture2D" uid="uid://ct1fhqjfc1s00" path="res://Asset/Crane_UI_Empty.png" id="5_g8f33"]
 [ext_resource type="Script" path="res://Scripts/CraneTrain.gd" id="5_u0b50"]
+[ext_resource type="Texture2D" uid="uid://cpxuenrjq0xcf" path="res://Asset/Crane_Main_Extend.png" id="6_28doa"]
 [ext_resource type="Texture2D" uid="uid://dtarhum7svgbx" path="res://Asset/Crane_Game_Train.png" id="6_88asv"]
 [ext_resource type="Texture2D" uid="uid://dwsqdwim2uaf2" path="res://Asset/Crane_Game_Particle_Success.png" id="6_ny6c0"]
 [ext_resource type="Texture2D" uid="uid://s1ixqldu6n0u" path="res://Asset/Crane_Game_Particle_Success_Sparkle.png" id="7_mc0b0"]
 [ext_resource type="Script" path="res://Scripts/CraneClaw.gd" id="7_yg7s0"]
-[ext_resource type="Texture2D" uid="uid://fa145vmhk56e" path="res://Asset/Crane_Game_Particle_Failure_0000.png" id="8_smgh7"]
+[ext_resource type="Texture2D" uid="uid://ckxqcyqn5gn64" path="res://Asset/Crane_ButtonLeft_Default.png" id="8_fle1t"]
+[ext_resource type="Texture2D" uid="uid://qjlt1gxl6aa7" path="res://Asset/Crane_Game_Particle_Failure_0000.png" id="8_smgh7"]
 [ext_resource type="Texture2D" uid="uid://dn58egli7gupe" path="res://Asset/Crane_Game_Wire.png" id="8_wm0mi"]
-[ext_resource type="Texture2D" uid="uid://l3i8i5p81p0i" path="res://Asset/Crane_Game_Particle_Failure_0001.png" id="9_ann7m"]
+[ext_resource type="Texture2D" uid="uid://dngb7tv8ymj5t" path="res://Asset/Crane_ButtonLeft_Pressed.png" id="9_0qj4b"]
+[ext_resource type="Texture2D" uid="uid://bfcyf62e444s8" path="res://Asset/Crane_Game_Particle_Failure_0001.png" id="9_ann7m"]
 [ext_resource type="Texture2D" uid="uid://crrdxcc7r0u6" path="res://Asset/Crane_Game_ClawOpen.png" id="9_ydaeg"]
+[ext_resource type="Texture2D" uid="uid://bhqa8o2djwnqw" path="res://Asset/Crane_ButtonRight_Default.png" id="10_q5uit"]
 [ext_resource type="Texture2D" uid="uid://3mmvs7sfu7x" path="res://Asset/Crane_Game_ClawGrab.png" id="10_td1wy"]
 [ext_resource type="Texture2D" uid="uid://clhu6vgb2l23g" path="res://Asset/Crane_Game_ClawNeutral.png" id="11_1cldk"]
+[ext_resource type="Texture2D" uid="uid://dtsv4u2j26o2u" path="res://Asset/Crane_ButtonRight_Pressed.png" id="11_a2hws"]
 [ext_resource type="Texture2D" uid="uid://c61ug1tdo54me" path="res://Asset/Crane_Game_Box_A.png" id="12_1g3iw"]
+[ext_resource type="Texture2D" uid="uid://xr7phkyesqck" path="res://Asset/Crane_ButtonYellow_Default.png" id="12_36ie7"]
+[ext_resource type="Texture2D" uid="uid://6k4mkrxowgvr" path="res://Asset/Crane_ButtonYellow_Pressed.png" id="13_00jma"]
 [ext_resource type="Texture2D" uid="uid://d1h7pu4moucrq" path="res://Asset/Crane_Game_Box_B.png" id="13_2m47i"]
 [ext_resource type="Texture2D" uid="uid://cc706nq3q2kjh" path="res://Asset/Crane_Game_Box_C.png" id="14_r0roq"]
 [ext_resource type="Texture2D" uid="uid://bohydmx1mr4iw" path="res://Asset/font/ui_interaction_bg.png" id="15_cuckp"]
@@ -292,16 +300,63 @@ texture = ExtResource("2_6flr6")
 
 [node name="Main" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(330, 172)
+position = Vector2(330, 123)
 texture = ExtResource("3_fop12")
+
+[node name="Outer" type="Sprite2D" parent="Main"]
+texture = ExtResource("4_yny2s")
 
 [node name="Glass" type="Sprite2D" parent="Main"]
 texture = ExtResource("4_qpvyu")
 
 [node name="EmptyLabel" type="Sprite2D" parent="Main"]
-visible = false
 position = Vector2(10, 0)
 texture = ExtResource("5_g8f33")
+
+[node name="ButtonMachine" type="Sprite2D" parent="Main"]
+z_index = 2
+position = Vector2(0, 182)
+texture = ExtResource("6_28doa")
+
+[node name="Control" type="Control" parent="Main/ButtonMachine"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -60.0
+offset_right = -180.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_ctrlb")
+
+[node name="LeftBtn" type="TextureButton" parent="Main/ButtonMachine/Control"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 12.0
+offset_right = 114.0
+offset_bottom = 72.0
+texture_normal = ExtResource("8_fle1t")
+texture_pressed = ExtResource("9_0qj4b")
+
+[node name="RightBtn" type="TextureButton" parent="Main/ButtonMachine/Control"]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 12.0
+offset_right = 191.0
+offset_bottom = 72.0
+texture_normal = ExtResource("10_q5uit")
+texture_pressed = ExtResource("11_a2hws")
+
+[node name="GrabBtn" type="TextureButton" parent="Main/ButtonMachine/Control"]
+layout_mode = 0
+offset_left = 246.0
+offset_top = 15.0
+offset_right = 311.0
+offset_bottom = 68.0
+texture_normal = ExtResource("12_36ie7")
+texture_pressed = ExtResource("13_00jma")
 
 [node name="VFXSucces" type="Node2D" parent="Main"]
 script = ExtResource("23_vfx01")
@@ -333,7 +388,7 @@ frame_progress = 0.576744
 
 [node name="CraneTrain" type="Node2D" parent="."]
 texture_filter = 1
-position = Vector2(214, 96)
+position = Vector2(220, 45)
 script = ExtResource("5_u0b50")
 
 [node name="CraneWire" type="Sprite2D" parent="CraneTrain"]
@@ -370,7 +425,7 @@ script = ExtResource("18_wre2g")
 [node name="BoxA" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
-position = Vector2(294, 251)
+position = Vector2(294, 199)
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxA"]
@@ -385,7 +440,7 @@ shape = SubResource("RectangleShape2D_3suxs")
 [node name="BoxB" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
-position = Vector2(364, 251)
+position = Vector2(364, 199)
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxB"]
@@ -400,7 +455,7 @@ shape = SubResource("RectangleShape2D_vf5m2")
 [node name="BoxC" type="Area2D" parent="Boxes" groups=["box"]]
 z_index = 1
 z_as_relative = false
-position = Vector2(434, 251)
+position = Vector2(434, 199)
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Boxes/BoxC"]
@@ -413,15 +468,16 @@ position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_36kft")
 
 [node name="DropZone" type="Area2D" parent="."]
-position = Vector2(198, 251)
+visible = false
+position = Vector2(220, 306)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
-position = Vector2(23, 119)
 shape = SubResource("RectangleShape2D_iw5yq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="DropZone"]
 
 [node name="ColorRect" type="ColorRect" parent="DropZone/CanvasLayer"]
+visible = false
 offset_left = 150.0
 offset_top = 292.0
 offset_right = 511.0
@@ -448,10 +504,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -269.0
-offset_top = 296.0
-offset_right = -1.0
-offset_bottom = 355.0
+offset_left = -267.0
+offset_top = -74.0
+offset_right = 1.0
+offset_bottom = -15.0
 grow_horizontal = 0
 texture = ExtResource("15_cuckp")
 
@@ -495,37 +551,10 @@ text = "Idle"
 label_settings = SubResource("LabelSettings_vrbh8")
 metadata/node_id = "status_label"
 
-[node name="ControlButtons" type="HBoxContainer" parent="UI/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -271.0
-offset_top = 129.0
-offset_right = 29.0
-offset_bottom = 169.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-script = ExtResource("32_ctrlb")
-
-[node name="GrabButton" type="Button" parent="UI/Control/ControlButtons"]
-layout_mode = 2
-text = "Grab"
-
-[node name="LeftButton" type="Button" parent="UI/Control/ControlButtons"]
-layout_mode = 2
-text = "Left"
-
-[node name="RightButton" type="Button" parent="UI/Control/ControlButtons"]
-layout_mode = 2
-text = "Right"
-
 [node name="Montage" type="CanvasLayer" parent="."]
 
 [node name="montage_blindboxopen" type="Node2D" parent="Montage"]
+visible = false
 z_index = 10
 position = Vector2(331, 171)
 script = ExtResource("31_wif3s")
@@ -921,7 +950,7 @@ text = "EXIT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="pressed" from="Main/ButtonMachine/Control/LeftBtn" to="Main/ButtonMachine/Control" method="_on_left_btn_pressed"]
+[connection signal="pressed" from="Main/ButtonMachine/Control/RightBtn" to="Main/ButtonMachine/Control" method="_on_right_btn_pressed"]
+[connection signal="pressed" from="Main/ButtonMachine/Control/GrabBtn" to="Main/ButtonMachine/Control" method="_on_grab_btn_pressed"]
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]
-[connection signal="pressed" from="UI/Control/ControlButtons/GrabButton" to="UI/Control/ControlButtons" method="_on_grab_button_pressed"]
-[connection signal="pressed" from="UI/Control/ControlButtons/LeftButton" to="UI/Control/ControlButtons" method="_on_left_button_pressed"]
-[connection signal="pressed" from="UI/Control/ControlButtons/RightButton" to="UI/Control/ControlButtons" method="_on_right_button_pressed"]
