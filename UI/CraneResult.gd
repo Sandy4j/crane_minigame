@@ -1,34 +1,44 @@
 extends Control
 
+const STAR_TEXTURE = preload("res://Asset/font/Crane_RarityStars.png")
+
 signal result_closed
 
-@onready var item_image: TextureRect = $Panel/VLayout/ImageFrame/ItemImage
+@onready var item_image: TextureRect = $Panel/VLayout/ItemImage
 @onready var item_name: Label = $Panel/VLayout/ItemName
 @onready var back_button: TextureButton = $Panel/VLayout/BackButton
-
-var item_list = [
-	"decorations_wall_bianlian.png",
-	"decorations_wall_bluespirit.png",
-	"decorations_wall_cepot.png",
-	"decorations_wall_dewi.png",
-	"decorations_wall_kitsune.png",
-	"decorations_wall_tengu.png"
-]
+@onready var stars: HBoxContainer = $Panel/VLayout/RarityStars
 
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
 	visible = false
 
-func show_result(_item_name: String, _item_texture: Texture2D) -> void:
-	var random_item = item_list[randi() % item_list.size()]
+func show_result() -> void:
+	var pools = preload("res://Scripts/PoolsRewards.gd").new()
+	var reward = pools.get_random_reward()
+	pools.free()
 	
-	var res_path = "res://Asset/item hadiah/" + random_item
+	var res_path = reward["texture_path"]
 	var tex = load(res_path)
-	var name = random_item.replace("decorations_wall_", "").replace(".png", "").capitalize()
+	var display_name = reward["name"].capitalize()
 	
-	item_name.text = name
+	item_name.text = display_name
 	item_image.texture = tex
+	
+	_update_stars(reward["rarity"])
+	
 	visible = true
+
+func _update_stars(rarity: int) -> void:
+	for child in stars.get_children():
+		child.queue_free()
+
+	for i in rarity:
+		var star = TextureRect.new()
+		star.texture = STAR_TEXTURE
+		star.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		star.custom_minimum_size = Vector2(30, 30)
+		stars.add_child(star)
 
 func _input(event):
 	if visible and event.is_action_pressed("grab"):

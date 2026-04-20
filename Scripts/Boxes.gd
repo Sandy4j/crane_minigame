@@ -13,8 +13,10 @@ const BOX_TEXTURES = [
 	$BoxC,
 	]
 	
+var current_texture: Texture2D
+
 func randomize_boxes() -> void:
-	var selected_texture = BOX_TEXTURES[randi() % BOX_TEXTURES.size()]
+	current_texture = BOX_TEXTURES[randi() % BOX_TEXTURES.size()]
 	for i in range(boxes.size()):
 		if is_instance_valid(boxes[i]) and boxes[i].has_node("Sprite2D"):
-			boxes[i].get_node("Sprite2D").texture = selected_texture
+			boxes[i].get_node("Sprite2D").texture = current_texture
