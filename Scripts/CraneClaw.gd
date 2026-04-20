@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var drop_speed: float = 60.0
-@export var max_drop: float = 80.0
+@export var max_drop: float = 78.0
 
 @export var grab_offset: Vector2 = Vector2(0,35)
 @export var open_anim_threshold: float = 40.0

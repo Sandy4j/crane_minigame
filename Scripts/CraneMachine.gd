@@ -18,11 +18,11 @@ signal machine_empty
 
 @onready var train = $CraneTrain
 @onready var claw = $CraneTrain/CraneClaw
-@onready var vfx_manager = $Main/VFXSucces
+@onready var vfx_manager = $Inner/VFXSucces
 @onready var boxes = $Boxes
 @onready var montage = $Montage/montage_blindboxopen
 
-@onready var empty_label = $Main/EmptyLabel
+@onready var empty_label = $Inner/EmptyLabel
 @onready var ui = $UI
 @onready var popup = $PopupUI/PopupRoot
 @onready var result = $PopupUI/ResultRoot
@@ -134,17 +134,15 @@ func _check_boxes() -> void:
 ## Signal dari area drop zone
 func _on_drop_zone_area_shape_entered(_area_rid, area, _area_shape_index, _local_shape_index):
 	if area.is_in_group("box"):
-		var item_texture: Texture2D = null
-		var item_name: String = area.name
-		var sprite = area.get_node_or_null("Sprite2D")
-		if sprite:
-			item_texture = sprite.texture
-
+		var box_texture = null
+		if area.has_node("Sprite2D"):
+			box_texture = area.get_node("Sprite2D").texture
+			
 		area.queue_free()
 		vfx_manager.play_success_vfx()
 		await vfx_manager.vfx_finished
-		await montage.play_montage()
-		result.show_result(item_name, item_texture)
+		await montage.play_montage(box_texture)
+		result.show_result()
 
 func _on_result_closed() -> void:
 	vfx_manager.stop_success_vfx()

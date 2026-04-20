@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
-[ext_resource type="Texture2D" uid="uid://lr8ejdnq26sc" path="res://Asset/Crane_Main.png" id="3_fop12"]
+[ext_resource type="Texture2D" uid="uid://dqpdvxwf1xkrq" path="res://Asset/New folder/Crane_Main_Inner.png" id="3_rkysb"]
 [ext_resource type="Texture2D" uid="uid://bkknqndlbm644" path="res://Asset/Crane_Glass.png" id="4_qpvyu"]
 [ext_resource type="Texture2D" uid="uid://c0viccrrfqsep" path="res://Asset/New folder/Crane_Main_Outer.png" id="4_yny2s"]
 [ext_resource type="Texture2D" uid="uid://ct1fhqjfc1s00" path="res://Asset/Crane_UI_Empty.png" id="5_g8f33"]
@@ -40,7 +40,6 @@
 [ext_resource type="Texture2D" uid="uid://xeuksubbwjqo" path="res://Asset/montage/montage_blindbox_a_0001.png" id="29_c4mwt"]
 [ext_resource type="Script" path="res://UI/CraneResult.gd" id="30_1lhj6"]
 [ext_resource type="Texture2D" uid="uid://bqaqxf7v7c0fo" path="res://Asset/montage/montage_blindbox_a_0002.png" id="30_oima2"]
-[ext_resource type="Texture2D" uid="uid://ddu2qebl4iarr" path="res://Asset/font/ui_main_itemframe_imagebox.png" id="31_av6m3"]
 [ext_resource type="Texture2D" uid="uid://cgttxflk3l3u4" path="res://Asset/montage/montage_blindbox_a_0003.png" id="31_lt7af"]
 [ext_resource type="Script" path="res://UI/montage_blindboxopen.gd" id="31_wif3s"]
 [ext_resource type="Script" path="res://UI/CraneEmpty.gd" id="32_3fryq"]
@@ -58,6 +57,7 @@
 [ext_resource type="Texture2D" uid="uid://dorku7u7li4wu" path="res://Asset/montage/montage_blindbox_a_0014.png" id="42_viavn"]
 [ext_resource type="Texture2D" uid="uid://buw07ghg0b5xu" path="res://Asset/montage/montage_blindbox_a_0015.png" id="43_vuwcb"]
 [ext_resource type="Shader" path="res://UI/Shader/speedlines.gdshader" id="45_ej7dx"]
+[ext_resource type="Texture2D" uid="uid://bbgajjqd0ucp4" path="res://Asset/font/ui_interaction_item_bg.png" id="57_goqs6"]
 
 [sub_resource type="Curve" id="Curve_cl54m"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -298,27 +298,28 @@ texture_filter = 1
 position = Vector2(330, 172)
 texture = ExtResource("2_6flr6")
 
-[node name="Main" type="Sprite2D" parent="."]
+[node name="Inner" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(330, 123)
-texture = ExtResource("3_fop12")
+texture = ExtResource("3_rkysb")
+offset = Vector2(0, 20)
 
-[node name="Outer" type="Sprite2D" parent="Main"]
+[node name="Outer" type="Sprite2D" parent="Inner"]
 texture = ExtResource("4_yny2s")
 
-[node name="Glass" type="Sprite2D" parent="Main"]
+[node name="Glass" type="Sprite2D" parent="Inner"]
 texture = ExtResource("4_qpvyu")
 
-[node name="EmptyLabel" type="Sprite2D" parent="Main"]
+[node name="EmptyLabel" type="Sprite2D" parent="Inner"]
 position = Vector2(10, 0)
 texture = ExtResource("5_g8f33")
 
-[node name="ButtonMachine" type="Sprite2D" parent="Main"]
+[node name="ButtonMachine" type="Sprite2D" parent="Inner"]
 z_index = 2
 position = Vector2(0, 182)
 texture = ExtResource("6_28doa")
 
-[node name="Control" type="Control" parent="Main/ButtonMachine"]
+[node name="Control" type="Control" parent="Inner/ButtonMachine"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -331,7 +332,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_ctrlb")
 
-[node name="LeftBtn" type="TextureButton" parent="Main/ButtonMachine/Control"]
+[node name="LeftBtn" type="TextureButton" parent="Inner/ButtonMachine/Control"]
 layout_mode = 0
 offset_left = 37.0
 offset_top = 12.0
@@ -340,7 +341,7 @@ offset_bottom = 72.0
 texture_normal = ExtResource("8_fle1t")
 texture_pressed = ExtResource("9_0qj4b")
 
-[node name="RightBtn" type="TextureButton" parent="Main/ButtonMachine/Control"]
+[node name="RightBtn" type="TextureButton" parent="Inner/ButtonMachine/Control"]
 layout_mode = 0
 offset_left = 114.0
 offset_top = 12.0
@@ -349,7 +350,7 @@ offset_bottom = 72.0
 texture_normal = ExtResource("10_q5uit")
 texture_pressed = ExtResource("11_a2hws")
 
-[node name="GrabBtn" type="TextureButton" parent="Main/ButtonMachine/Control"]
+[node name="GrabBtn" type="TextureButton" parent="Inner/ButtonMachine/Control"]
 layout_mode = 0
 offset_left = 246.0
 offset_top = 15.0
@@ -358,16 +359,16 @@ offset_bottom = 68.0
 texture_normal = ExtResource("12_36ie7")
 texture_pressed = ExtResource("13_00jma")
 
-[node name="VFXSucces" type="Node2D" parent="Main"]
+[node name="VFXSucces" type="Node2D" parent="Inner"]
 script = ExtResource("23_vfx01")
 
-[node name="Overlay" type="Sprite2D" parent="Main/VFXSucces"]
+[node name="Overlay" type="Sprite2D" parent="Inner/VFXSucces"]
 visible = false
 z_index = 2
 position = Vector2(1, 25)
 texture = ExtResource("6_ny6c0")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Main/VFXSucces"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Inner/VFXSucces"]
 z_index = 3
 emitting = false
 amount = 4
@@ -375,10 +376,10 @@ process_material = SubResource("ParticleProcessMaterial_5px8l")
 texture = ExtResource("7_mc0b0")
 lifetime = 0.4
 
-[node name="VFXFailure" type="Node2D" parent="Main/VFXSucces"]
+[node name="VFXFailure" type="Node2D" parent="Inner/VFXSucces"]
 texture_filter = 1
 
-[node name="Overlay" type="AnimatedSprite2D" parent="Main/VFXSucces/VFXFailure"]
+[node name="Overlay" type="AnimatedSprite2D" parent="Inner/VFXSucces/VFXFailure"]
 visible = false
 z_index = 1
 position = Vector2(0, 2)
@@ -468,7 +469,6 @@ position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_36kft")
 
 [node name="DropZone" type="Area2D" parent="."]
-visible = false
 position = Vector2(220, 306)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
@@ -750,7 +750,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ResultRoot" type="Control" parent="PopupUI"]
-visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -776,17 +775,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -90.0
-offset_top = -120.0
-offset_right = 90.0
-offset_bottom = 120.0
+offset_left = -120.0
+offset_top = -140.0
+offset_right = 120.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("15_cuckp")
-patch_margin_left = 12
-patch_margin_top = 12
-patch_margin_right = 20
-patch_margin_bottom = 12
+texture = ExtResource("57_goqs6")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
 
 [node name="VLayout" type="VBoxContainer" parent="PopupUI/ResultRoot/Panel"]
 layout_mode = 1
@@ -799,32 +798,19 @@ offset_right = -14.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
 alignment = 1
 
-[node name="ImageFrame" type="TextureRect" parent="PopupUI/ResultRoot/Panel/VLayout"]
-custom_minimum_size = Vector2(100, 100)
+[node name="ItemImage" type="TextureRect" parent="PopupUI/ResultRoot/Panel/VLayout"]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("31_av6m3")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="ItemImage" type="TextureRect" parent="PopupUI/ResultRoot/Panel/VLayout/ImageFrame"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -28.0
-offset_top = -28.0
-offset_right = 28.0
-offset_bottom = 28.0
-grow_horizontal = 2
-grow_vertical = 2
 stretch_mode = 5
 metadata/node_id = "box_image"
+
+[node name="RarityStars" type="HBoxContainer" parent="PopupUI/ResultRoot/Panel/VLayout"]
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="ItemName" type="Label" parent="PopupUI/ResultRoot/Panel/VLayout"]
 layout_mode = 2
@@ -950,7 +936,7 @@ text = "EXIT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Main/ButtonMachine/Control/LeftBtn" to="Main/ButtonMachine/Control" method="_on_left_btn_pressed"]
-[connection signal="pressed" from="Main/ButtonMachine/Control/RightBtn" to="Main/ButtonMachine/Control" method="_on_right_btn_pressed"]
-[connection signal="pressed" from="Main/ButtonMachine/Control/GrabBtn" to="Main/ButtonMachine/Control" method="_on_grab_btn_pressed"]
+[connection signal="pressed" from="Inner/ButtonMachine/Control/LeftBtn" to="Inner/ButtonMachine/Control" method="_on_left_btn_pressed"]
+[connection signal="pressed" from="Inner/ButtonMachine/Control/RightBtn" to="Inner/ButtonMachine/Control" method="_on_right_btn_pressed"]
+[connection signal="pressed" from="Inner/ButtonMachine/Control/GrabBtn" to="Inner/ButtonMachine/Control" method="_on_grab_btn_pressed"]
 [connection signal="area_shape_entered" from="DropZone" to="." method="_on_drop_zone_area_shape_entered"]
