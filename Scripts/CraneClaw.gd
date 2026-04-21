@@ -1,12 +1,18 @@
 extends Area2D
 
-@export var drop_speed: float = 60.0
-@export var max_drop: float = 78.0
-
-@export var grab_offset: Vector2 = Vector2(0,35)
-@export var open_anim_threshold: float = 40.0
+signal claw_moving_up
+signal claw_finished
+signal box_dropped
+signal grab_failed
 
 enum ClawState { IDLE, DROPPING, RETURNING, FAILING }
+
+const WIRE_BASE_HEIGHT: float = 8.0
+
+@export var drop_speed: float = 60.0
+@export var max_drop: float = 78.0
+@export var grab_offset: Vector2 = Vector2(0,35)
+@export var open_anim_threshold: float = 40.0
 
 var state: ClawState = ClawState.IDLE
 var start_y: float
@@ -19,11 +25,6 @@ var _open_anim_played: bool = false
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var train_anchor: Marker2D = get_parent().get_node("Marker2D")
 @onready var crane_machine = get_parent().get_parent()
-
-const WIRE_BASE_HEIGHT: float = 8.0
-
-signal box_dropped
-signal grab_failed
 
 func _ready():
 	start_y = position.y
@@ -51,6 +52,7 @@ func _process(delta):
 				position.y = start_y
 				if state == ClawState.RETURNING:
 					state = ClawState.IDLE
+					claw_finished.emit()
 					if grabbed_box != null:
 						get_parent().on_claw_grabbed()
 					else:
@@ -89,6 +91,7 @@ func _try_grab():
 
 		if randf() <= crane_machine.success_chance:
 			state = ClawState.RETURNING
+			claw_moving_up.emit()
 		else:
 			_handle_fail()
 
@@ -111,12 +114,14 @@ func _detach_box() -> Area2D:
 ## Handle saat gagal grab box — box dikembalikan ke posisi semula
 func _handle_fail():
 	state = ClawState.FAILING
+	claw_moving_up.emit()
 
 	await get_tree().create_timer(0.55).timeout
 
 	var box = _detach_box()
 	if not box:
 		state = ClawState.IDLE
+		claw_finished.emit()
 		return
 
 	var tween = create_tween()
@@ -128,6 +133,7 @@ func _handle_fail():
 
 	anim.play("ClawNeutral")
 	state = ClawState.IDLE
+	claw_finished.emit()
 	grab_failed.emit()
 
 ## Lepas box dari claw: tampilkan animasi ClawOpen, lalu tampilkan animasi ClawNeutral

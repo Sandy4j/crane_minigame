@@ -1,8 +1,8 @@
 extends Control
 
-const STAR_TEXTURE = preload("res://Asset/font/Crane_RarityStars.png")
-
 signal result_closed
+
+const STAR_TEXTURE = preload("res://Asset/font/Crane_RarityStars.png")
 
 @onready var item_image: TextureRect = $Panel/VLayout/ItemImage
 @onready var item_name: Label = $Panel/VLayout/ItemName

@@ -319,7 +319,7 @@ z_index = 2
 position = Vector2(0, 182)
 texture = ExtResource("6_28doa")
 
-[node name="Control" type="Control" parent="Inner/ButtonMachine"]
+[node name="Control" type="Control" parent="Inner/ButtonMachine" node_paths=PackedStringArray("crane_train")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -331,6 +331,7 @@ offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_ctrlb")
+crane_train = NodePath("../../../CraneTrain")
 
 [node name="LeftBtn" type="TextureButton" parent="Inner/ButtonMachine/Control"]
 layout_mode = 0
@@ -363,9 +364,8 @@ texture_pressed = ExtResource("13_00jma")
 script = ExtResource("23_vfx01")
 
 [node name="Overlay" type="Sprite2D" parent="Inner/VFXSucces"]
-visible = false
-z_index = 2
-position = Vector2(1, 25)
+z_index = 6
+position = Vector2(0, 16)
 texture = ExtResource("6_ny6c0")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Inner/VFXSucces"]
@@ -381,7 +381,7 @@ texture_filter = 1
 
 [node name="Overlay" type="AnimatedSprite2D" parent="Inner/VFXSucces/VFXFailure"]
 visible = false
-z_index = 1
+z_index = 6
 position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_arpgf")
 frame = 1
@@ -406,7 +406,7 @@ texture = ExtResource("6_88asv")
 position = Vector2(-1, 10)
 
 [node name="CraneClaw" type="Area2D" parent="CraneTrain"]
-z_index = 10
+z_index = 5
 z_as_relative = false
 position = Vector2(-1, 40)
 script = ExtResource("7_yg7s0")
@@ -750,6 +750,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ResultRoot" type="Control" parent="PopupUI"]
+visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
