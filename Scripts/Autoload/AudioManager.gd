@@ -1,0 +1,116 @@
+extends Node
+
+const AUDIO_REGISTRY: Dictionary = {
+	# BGM
+	"bgm_menu":    "res://Audio/BGM/Crane_Menu.ogg",
+	"bgm_action":  "res://Audio/BGM/Crane_Action.ogg",
+
+	# SFX
+	"sfx_grab":    "res://Audio/SFX/grab.ogg",
+	"sfx_drop":    "res://Audio/SFX/drop.ogg",
+	"sfx_win":     "res://Audio/SFX/win.ogg",
+	"sfx_fail":    "res://Audio/SFX/fail.ogg",
+	"sfx_click":   "res://Audio/SFX/button.wav",
+}
+
+const BGM_TRACKS := ["bgm_menu", "bgm_action"]
+const SFX_POOL_SIZE  := 6  # jumlah AudioStreamPlayer paralel untuk SFX
+const BGM_VOLUME_MIN := -80.0  # mute
+
+var bgm_volume :=   0.0
+
+var _bgm_players: Array[AudioStreamPlayer] = []
+var _active_track := 0
+
+var _sfx_pool: Array[AudioStreamPlayer] = []
+var _sfx_pool_index := 0
+var _streams: Dictionary = {}
+var _fade_tween: Tween
+
+
+func _ready() -> void:
+	for key in BGM_TRACKS:
+		var p := AudioStreamPlayer.new()
+		p.bus = "BGM"
+		p.volume_db = BGM_VOLUME_MIN
+		add_child(p)
+		_bgm_players.append(p)
+
+	for i in SFX_POOL_SIZE:
+		var p := AudioStreamPlayer.new()
+		p.bus = "SFX"
+		add_child(p)
+		_sfx_pool.append(p)
+
+func start_bgm() -> void:
+	for i in _bgm_players.size():
+		if _bgm_players[i].playing:
+			continue
+		var stream := _get_stream(BGM_TRACKS[i])
+		if stream == null:
+			continue
+		if stream is AudioStreamOggVorbis:
+			stream.loop = true
+		elif stream is AudioStreamMP3:
+			stream.loop = true
+		_bgm_players[i].stream = stream
+		_bgm_players[i].play()
+
+	_bgm_players[_active_track].volume_db = bgm_volume
+
+
+## Fade out ke track lama, fade in ke track baru
+func switch_bgm(key: String, duration := 1.0) -> void:
+	var target := BGM_TRACKS.find(key)
+	if target == -1:
+		push_warning("AudioManager: bgm key tidak dikenal -> '%s'" % key)
+		return
+	if target == _active_track:
+		return
+
+	# Batalkan fade yang sedang berjalan jika ada
+	if _fade_tween and _fade_tween.is_valid():
+		_fade_tween.kill()
+
+	_fade_tween = create_tween()
+	_fade_tween.set_parallel(true)
+
+	_fade_tween.tween_property(
+		_bgm_players[_active_track], "volume_db",
+		BGM_VOLUME_MIN, duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	_fade_tween.tween_property(
+		_bgm_players[target], "volume_db",
+		bgm_volume, duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	_active_track = target
+
+func set_bgm_volume(volume_db: float) -> void:
+	bgm_volume = volume_db
+	_bgm_players[_active_track].volume_db = volume_db
+
+## Play SFX dengan mengambil AudioStream dari pool secara bergiliran
+func play_sfx(key: String) -> void:
+	var stream := _get_stream(key)
+	if stream == null:
+		return
+	var player := _sfx_pool[_sfx_pool_index]
+	_sfx_pool_index = (_sfx_pool_index + 1) % SFX_POOL_SIZE
+	player.stream = stream
+	player.play()
+
+## Load audio stream dari file
+func _get_stream(key: String) -> AudioStream:
+	if _streams.has(key):
+		return _streams[key]
+	if not AUDIO_REGISTRY.has(key):
+		push_warning("AudioManager: key tidak ditemukan -> '%s'" % key)
+		return null
+	var stream := load(AUDIO_REGISTRY[key]) as AudioStream
+	if stream == null:
+		push_warning("AudioManager: gagal load -> '%s'" % AUDIO_REGISTRY[key])
+		return null
+	_streams[key] = stream
+	return stream
