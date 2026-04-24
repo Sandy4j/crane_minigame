@@ -40,7 +40,11 @@ func _ready():
 
 	_load_config()
 	aurum_changed.emit(aurum)
-	popup.open(self)
+	# popup will be opened after MainMenu behavior finishes
+
+func trigger_initial_popup() -> void:
+	if not session_active:
+		popup.open(self)
 
 ## Load konfigurasi dari file eksternal
 func _load_config() -> void:

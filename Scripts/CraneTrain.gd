@@ -87,6 +87,7 @@ func _select_box(direction: int) -> void:
 
 	var new_index: int = clamp(selected_index + direction, 0, box_targets.size() - 1)
 	if new_index == selected_index:
+		_bump_effect(direction)
 		return
 
 	_try_deduct_session()
@@ -128,6 +129,25 @@ func _snap_to_selected_box() -> void:
 		return
 	var target_x: float = box_targets[selected_index].global_position.x - claw.position.x
 	_tween_to_x(target_x, snap_speed)
+
+## Animasi mentok saat mencoba gerak ke arah yang illegal
+func _bump_effect(direction: int) -> void:
+	if selected_index < 0 or selected_index >= box_targets.size():
+		return
+		
+	var target_x: float = box_targets[selected_index].global_position.x - claw.position.x
+	var bump_distance: float = 15.0
+	
+	_stop_tween()
+	movement_tween = create_tween()
+	movement_tween.set_trans(Tween.TRANS_SINE)
+	
+	movement_tween.tween_property(self, "position:x", target_x + (direction * bump_distance), 0.1).set_ease(Tween.EASE_OUT)
+	movement_tween.tween_property(self, "position:x", target_x, 0.1).set_ease(Tween.EASE_IN_OUT)
+	
+	movement_tween.finished.connect(func():
+		move_finished.emit()
+	, CONNECT_ONE_SHOT)
 
 ## Kembali ke posisi drop zone
 func _return_to_drop_zone(use_tween: bool, on_finished: Callable = Callable()) -> void:
