@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b22h8pkinhnup"
+path="res://.godot/imported/hitting platform.ogg-46777e240905339fa6ad3bd923a0d512.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/hitting platform.ogg"
+dest_files=["res://.godot/imported/hitting platform.ogg-46777e240905339fa6ad3bd923a0d512.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

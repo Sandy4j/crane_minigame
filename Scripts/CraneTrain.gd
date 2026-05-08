@@ -142,10 +142,13 @@ func _bump_effect(direction: int) -> void:
 	movement_tween = create_tween()
 	movement_tween.set_trans(Tween.TRANS_SINE)
 	
+	AudioManager.play_train_move()
+	
 	movement_tween.tween_property(self, "position:x", target_x + (direction * bump_distance), 0.1).set_ease(Tween.EASE_OUT)
 	movement_tween.tween_property(self, "position:x", target_x, 0.1).set_ease(Tween.EASE_IN_OUT)
 	
 	movement_tween.finished.connect(func():
+		AudioManager.stop_train_move()
 		move_finished.emit()
 	, CONNECT_ONE_SHOT)
 
@@ -169,6 +172,8 @@ func _tween_to_x(target_x: float, move_speed: float, on_finished: Callable = Cal
 		move_finished.emit()
 		return
 
+	AudioManager.play_train_move()
+
 	var duration: float = distance / max(move_speed, 1.0)
 	movement_tween = create_tween()
 	movement_tween.set_trans(Tween.TRANS_SINE)
@@ -176,6 +181,7 @@ func _tween_to_x(target_x: float, move_speed: float, on_finished: Callable = Cal
 	movement_tween.tween_property(self, "position:x", target_x, duration)
 	
 	movement_tween.finished.connect(func():
+		AudioManager.stop_train_move()
 		if on_finished.is_valid(): on_finished.call()
 		move_finished.emit()
 	, CONNECT_ONE_SHOT)
@@ -185,6 +191,7 @@ func _stop_tween() -> void:
 	if movement_tween != null:
 		movement_tween.kill()
 		movement_tween = null
+	AudioManager.stop_train_move()
 
 ## Cek apakah sedang ada tween yang berjalan 
 func _is_tweening() -> bool:

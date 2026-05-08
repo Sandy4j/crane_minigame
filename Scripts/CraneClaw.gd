@@ -42,6 +42,7 @@ func _process(delta):
 				anim.play("ClawOpen")
 				_open_anim_played = true
 			if position.y >= start_y + max_drop:
+				AudioManager.stop_wire()
 				state = ClawState.IDLE
 				_try_grab()
 
@@ -49,6 +50,7 @@ func _process(delta):
 			position.y -= drop_speed * delta
 			_update_wire()
 			if position.y <= start_y:
+				AudioManager.trigger_wire_ascend_end()
 				position.y = start_y
 				if state == ClawState.RETURNING:
 					state = ClawState.IDLE
@@ -69,11 +71,13 @@ func _update_wire():
 
 func drop():
 	_open_anim_played = false
+	AudioManager.play_wire_descend()
 	state = ClawState.DROPPING
 
 func _try_grab():
 	var overlapping = get_overlapping_areas()
 	if overlapping.size() > 0:
+		AudioManager.play_sfx("sfx_grab_box")
 		grabbed_box = overlapping[0]
 		_box_origin = grabbed_box.global_position
 
@@ -90,6 +94,7 @@ func _try_grab():
 		await get_tree().create_timer(0.2).timeout
 
 		if randf() <= crane_machine.success_chance:
+			AudioManager.play_wire_ascend()
 			state = ClawState.RETURNING
 			claw_moving_up.emit()
 		else:
@@ -105,7 +110,7 @@ func _detach_box() -> Area2D:
 	grabbed_box = null
 
 	anim.play("ClawOpen")
-	box.reparent(get_tree().current_scene)
+	box.reparent(crane_machine.get_node("Boxes"))
 	if box.has_node("CollisionShape2D"):
 		box.get_node("CollisionShape2D").disabled = false
 
@@ -114,6 +119,7 @@ func _detach_box() -> Area2D:
 ## Handle saat gagal grab box — box dikembalikan ke posisi semula
 func _handle_fail():
 	state = ClawState.FAILING
+	AudioManager.play_wire_ascend()
 	claw_moving_up.emit()
 
 	await get_tree().create_timer(0.55).timeout
@@ -130,6 +136,7 @@ func _handle_fail():
 	tween.tween_property(box, "global_position", _box_origin, 0.4)
 
 	await tween.finished
+	AudioManager.play_sfx("box_platform_hit")
 
 	anim.play("ClawNeutral")
 	state = ClawState.IDLE
@@ -141,7 +148,8 @@ func release_box():
 	var box = _detach_box()
 	if not box:
 		return
-
+	
+	AudioManager.play_sfx("box_drop")
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN)
 	tween.set_trans(Tween.TRANS_QUAD)

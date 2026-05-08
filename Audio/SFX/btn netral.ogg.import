@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dc5mvwccif1w6"
+path="res://.godot/imported/btn netral.ogg-7c6ceb5eeb2956e63a9b4b84688b1afa.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/btn netral.ogg"
+dest_files=["res://.godot/imported/btn netral.ogg-7c6ceb5eeb2956e63a9b4b84688b1afa.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

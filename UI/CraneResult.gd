@@ -14,9 +14,7 @@ func _ready():
 	visible = false
 
 func show_result() -> void:
-	var pools = preload("res://Scripts/PoolsRewards.gd").new()
-	var reward = pools.get_random_reward()
-	pools.free()
+	var reward = PoolsRewards.get_random_reward()
 	
 	var res_path = reward["texture_path"]
 	var tex = load(res_path)

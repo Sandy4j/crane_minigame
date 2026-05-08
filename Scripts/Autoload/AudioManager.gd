@@ -6,11 +6,23 @@ const AUDIO_REGISTRY: Dictionary = {
 	"bgm_action":  "res://Audio/BGM/Crane_Action.ogg",
 
 	# SFX
-	"sfx_grab":    "res://Audio/SFX/grab.ogg",
-	"sfx_drop":    "res://Audio/SFX/drop.ogg",
-	"sfx_win":     "res://Audio/SFX/win.ogg",
-	"sfx_fail":    "res://Audio/SFX/fail.ogg",
-	"sfx_click":   "res://Audio/SFX/button.wav",
+	"sfx_btn_grab": "res://Audio/SFX/btn grab.ogg",
+	"sfx_btn_move": "res://Audio/SFX/btn move.ogg",
+	"sfx_btn_hover": "res://Audio/SFX/btn hover.ogg",
+	"sfx_btn_netral": "res://Audio/SFX/btn netral.ogg",
+	
+	"sfx_wire_ascend": "res://Audio/SFX/wire ascend.ogg",
+	"sfx_wire_descend": "res://Audio/SFX/wire descend.ogg",
+	"sfx_grab_box": "res://Audio/SFX/box grabbed.ogg",
+	"sfx_train_move": "res://Audio/SFX/train move.ogg",
+	
+	"claw_open": "res://Audio/SFX/claw open.ogg",
+	"box_platform_hit": "res://Audio/SFX/hitting platform.ogg",
+	"box_drop": "res://Audio/SFX/box drop.ogg",
+	"montage": "res://Audio/SFX/montage.ogg",
+	"fanfare": "",
+	
+	
 }
 
 const BGM_TRACKS := ["bgm_menu", "bgm_action"]
@@ -27,6 +39,8 @@ var _sfx_pool_index := 0
 var _streams: Dictionary = {}
 var _fade_tween: Tween
 
+var _train_sfx_player: AudioStreamPlayer
+var _wire_sfx_player: AudioStreamPlayer
 
 func _ready() -> void:
 	for key in BGM_TRACKS:
@@ -41,6 +55,14 @@ func _ready() -> void:
 		p.bus = "SFX"
 		add_child(p)
 		_sfx_pool.append(p)
+
+	_train_sfx_player = AudioStreamPlayer.new()
+	_train_sfx_player.bus = "SFX"
+	add_child(_train_sfx_player)
+
+	_wire_sfx_player = AudioStreamPlayer.new()
+	_wire_sfx_player.bus = "SFX"
+	add_child(_wire_sfx_player)
 
 func start_bgm() -> void:
 	for i in _bgm_players.size():
@@ -58,7 +80,6 @@ func start_bgm() -> void:
 
 	_bgm_players[_active_track].volume_db = bgm_volume
 
-
 ## Fade out ke track lama, fade in ke track baru
 func switch_bgm(key: String, duration := 1.0) -> void:
 	var target := BGM_TRACKS.find(key)
@@ -67,8 +88,7 @@ func switch_bgm(key: String, duration := 1.0) -> void:
 		return
 	if target == _active_track:
 		return
-
-	# Batalkan fade yang sedang berjalan jika ada
+		
 	if _fade_tween and _fade_tween.is_valid():
 		_fade_tween.kill()
 
@@ -100,6 +120,45 @@ func play_sfx(key: String) -> void:
 	_sfx_pool_index = (_sfx_pool_index + 1) % SFX_POOL_SIZE
 	player.stream = stream
 	player.play()
+
+func play_train_move() -> void:
+	var stream := _get_stream("sfx_train_move")
+	if stream == null: return
+	if _train_sfx_player.stream != stream:
+		_train_sfx_player.stream = stream
+	if not _train_sfx_player.playing:
+		_train_sfx_player.play()
+
+func stop_train_move() -> void:
+	if _train_sfx_player.playing:
+		_train_sfx_player.stop()
+
+## play sfx khusus wire karena perlu loop saat naik/turun, dan trigger saat mencapai puncak
+func play_wire_descend() -> void:
+	var stream := _get_stream("sfx_wire_descend")
+	if stream == null: return
+	if _wire_sfx_player.stream != stream:
+		_wire_sfx_player.stream = stream
+	if not _wire_sfx_player.playing:
+		_wire_sfx_player.play()
+
+func play_wire_ascend() -> void:
+	var stream := _get_stream("sfx_wire_ascend")
+	if stream == null: return
+	if _wire_sfx_player.stream != stream:
+		_wire_sfx_player.stream = stream
+	if not _wire_sfx_player.playing:
+		_wire_sfx_player.play()
+
+func trigger_wire_ascend_end() -> void:
+	var stream := _get_stream("sfx_wire_ascend")
+	if stream == null: return
+	_wire_sfx_player.stream = stream
+	_wire_sfx_player.play(1.0)
+
+func stop_wire() -> void:
+	if _wire_sfx_player.playing:
+		_wire_sfx_player.stop()
 
 ## Load audio stream dari file
 func _get_stream(key: String) -> AudioStream:

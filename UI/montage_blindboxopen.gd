@@ -41,6 +41,7 @@ func play_montage(box_texture: Texture2D = null) -> void:
 	
 	show()
 	dim.visible = true
+	AudioManager.play_sfx("montage")
 	animation_player.play("default")
 	await animation_player.animation_finished
 	dim.visible = false

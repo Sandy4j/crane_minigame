@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ctkrbv4307w0m"
+path="res://.godot/imported/train move.ogg-9f97536aae7b4989cd468d21590b678f.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/train move.ogg"
+dest_files=["res://.godot/imported/train move.ogg-9f97536aae7b4989cd468d21590b678f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

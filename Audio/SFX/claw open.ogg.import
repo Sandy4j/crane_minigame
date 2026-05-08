@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cq7c5igefu8g3"
+path="res://.godot/imported/claw open.ogg-053de3f103b08e6f36a40f3bb6a1871a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/claw open.ogg"
+dest_files=["res://.godot/imported/claw open.ogg-053de3f103b08e6f36a40f3bb6a1871a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -40,7 +40,6 @@ func _ready():
 
 	_load_config()
 	aurum_changed.emit(aurum)
-	# popup will be opened after MainMenu behavior finishes
 
 func trigger_initial_popup() -> void:
 	if not session_active:
