@@ -45,6 +45,9 @@ func trigger_initial_popup() -> void:
 	if not session_active:
 		popup.open(self)
 
+func check_success() -> bool:
+	return randf() <= success_chance
+
 ## Load konfigurasi dari file eksternal
 func _load_config() -> void:
 	var path := OS.get_executable_path().get_base_dir().path_join("config.json")

@@ -22,6 +22,8 @@ func _ready():
 
 	claw.box_dropped.connect(_reset_after_session)
 	claw.grab_failed.connect(_reset_after_session)
+	claw.claw_returned_with_box.connect(on_claw_grabbed)
+	claw.claw_returned_empty.connect(on_claw_finished)
 
 func _process(_delta):
 	if is_auto_moving:

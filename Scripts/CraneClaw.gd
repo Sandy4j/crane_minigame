@@ -4,6 +4,8 @@ signal claw_moving_up
 signal claw_finished
 signal box_dropped
 signal grab_failed
+signal claw_returned_with_box
+signal claw_returned_empty
 
 enum ClawState { IDLE, DROPPING, RETURNING, FAILING }
 
@@ -20,14 +22,19 @@ var grabbed_box: Area2D = null
 var _box_origin: Vector2
 var _open_anim_played: bool = false
 
+@export var train_anchor: Marker2D
+@export var crane_machine: Node2D
+
 @onready var wire: Sprite2D = $"../CraneWire"
 @onready var anim: AnimatedSprite2D = $ClawSprite
 @onready var collision: CollisionShape2D = $CollisionShape2D
-@onready var train_anchor: Marker2D = get_parent().get_node("Marker2D")
-@onready var crane_machine = get_parent().get_parent()
 
 func _ready():
 	start_y = position.y
+	if not train_anchor:
+		train_anchor = $"../Marker2D"
+	if not crane_machine:
+		crane_machine = owner
 
 ## Claw dianggap sibuk jika tidak dalam state IDLE
 func is_busy() -> bool:
@@ -56,9 +63,9 @@ func _process(delta):
 					state = ClawState.IDLE
 					claw_finished.emit()
 					if grabbed_box != null:
-						get_parent().on_claw_grabbed()
+						claw_returned_with_box.emit()
 					else:
-						get_parent().on_claw_finished()
+						claw_returned_empty.emit()
 				# Jika FAILING, biarkan _handle_fail() yang menyelesaikan state
 
 ## Update wire berdasarkan posisi claw
@@ -93,7 +100,7 @@ func _try_grab():
 			grabbed_box.get_node("CollisionShape2D").disabled = true
 		await get_tree().create_timer(0.2).timeout
 
-		if randf() <= crane_machine.success_chance:
+		if crane_machine.check_success():
 			AudioManager.play_wire_ascend()
 			state = ClawState.RETURNING
 			claw_moving_up.emit()
