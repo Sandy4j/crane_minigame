@@ -5,8 +5,8 @@ extends Control
 @onready var panel = $Panel
 
 func _ready():
-	#AudioManager.start_bgm()
-	#AudioManager.switch_bgm("bgm_menu", 1.5)
+	AudioManager.start_bgm()
+	AudioManager.switch_bgm("bgm_menu", 0.5)
 	pass
 
 func _on_play_btn_pressed():

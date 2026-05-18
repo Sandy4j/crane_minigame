@@ -18,6 +18,7 @@ func play_success_vfx() -> void:
 		return
 
 	is_playing = true
+	AudioManager.play_sfx("fanfare_success")
 	success_overlay.visible = true
 	success_overlay.modulate.a = 0.0
 	success_particles.emitting = true
@@ -33,7 +34,7 @@ func play_failure_vfx() -> void:
 		return
 
 	is_playing = true
-	
+	AudioManager.play_sfx("fanfare_failed")
 	failure_overlay.visible = true
 	failure_overlay.modulate.a = 0.0
 	failure_overlay.frame = 0

@@ -19,11 +19,10 @@ signal machine_empty
 @onready var train = $CraneTrain
 @onready var claw = $CraneTrain/CraneClaw
 @onready var vfx_manager = $Inner/VFXSucces
-@onready var boxes = $Boxes
+@onready var boxes_con = $Boxes
 @onready var montage = $Montage/montage_blindboxopen
 
 @onready var empty_label = $Inner/EmptyLabel
-@onready var ui = $UI
 @onready var popup = $PopupUI/PopupRoot
 @onready var result = $PopupUI/ResultRoot
 @onready var empty = $PopupUI/EmptyRoot
@@ -34,7 +33,7 @@ func _ready():
 	result.result_closed.connect(_on_result_closed)
 	
 	montage.visible = false
-	boxes.randomize_boxes()
+	boxes_con.randomize_boxes()
 	empty_label.visible = false
 	train.can_move = false
 
@@ -90,6 +89,7 @@ func try_start_session() -> void:
 		return
 
 	_activate_session()
+	AudioManager.switch_bgm("bgm_action", 0.5)
 	train.can_move = true
 	popup.close()
 

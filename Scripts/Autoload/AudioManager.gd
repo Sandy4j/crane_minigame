@@ -20,7 +20,8 @@ const AUDIO_REGISTRY: Dictionary = {
 	"box_platform_hit": "res://Audio/SFX/hitting platform.ogg",
 	"box_drop": "res://Audio/SFX/box drop.ogg",
 	"montage": "res://Audio/SFX/montage.ogg",
-	"fanfare": "",
+	"fanfare_success": "res://Audio/SFX/fanfare succedd.ogg",
+	"fanfare_failed": "res://Audio/SFX/fanfare failed.ogg",
 	
 	
 }
@@ -88,22 +89,35 @@ func switch_bgm(key: String, duration := 1.0) -> void:
 		return
 	if target == _active_track:
 		return
-		
+
 	if _fade_tween and _fade_tween.is_valid():
 		_fade_tween.kill()
+
+	var from_player := _bgm_players[_active_track]
+	var to_player   := _bgm_players[target]
+
+	var from_amp := db_to_linear(from_player.volume_db)
+	var target_amp := db_to_linear(bgm_volume)
 
 	_fade_tween = create_tween()
 	_fade_tween.set_parallel(true)
 
-	_fade_tween.tween_property(
-		_bgm_players[_active_track], "volume_db",
-		BGM_VOLUME_MIN, duration
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Fade Out
+	_fade_tween.tween_method(
+		func(amp: float): from_player.volume_db = linear_to_db(maxf(amp, 0.0001)),
+		from_amp, 0.0, duration
+	).set_trans(Tween.TRANS_LINEAR)
 
-	_fade_tween.tween_property(
-		_bgm_players[target], "volume_db",
-		bgm_volume, duration
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Fade In
+	_fade_tween.tween_method(
+		func(amp: float): to_player.volume_db = linear_to_db(maxf(amp, 0.0001)),
+		0.0, target_amp, duration
+	).set_trans(Tween.TRANS_LINEAR)
+
+	# Cleanup volume track lama setelah tween selesai
+	_fade_tween.tween_callback(
+		func(): from_player.volume_db = BGM_VOLUME_MIN
+	).set_delay(duration)
 
 	_active_track = target
 

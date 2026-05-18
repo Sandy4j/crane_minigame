@@ -1,0 +1,74 @@
+[gd_resource type="SpriteFrames" load_steps=17 format=3 uid="uid://wfgffij86cgf"]
+
+[ext_resource type="Texture2D" uid="uid://bdeukdxhv8d3c" path="res://Asset/montage/Montage_Blindbox_B_0000.png" id="1_7l6wx"]
+[ext_resource type="Texture2D" uid="uid://wd0adeij7bbb" path="res://Asset/montage/Montage_Blindbox_B_0001.png" id="2_u1bia"]
+[ext_resource type="Texture2D" uid="uid://bxbd36duyh0ye" path="res://Asset/montage/Montage_Blindbox_B_0002.png" id="3_5o2qo"]
+[ext_resource type="Texture2D" uid="uid://b34hktblcwo4r" path="res://Asset/montage/Montage_Blindbox_B_0003.png" id="4_gerv2"]
+[ext_resource type="Texture2D" uid="uid://dcph0wsirthub" path="res://Asset/montage/Montage_Blindbox_B_0004.png" id="5_xeddt"]
+[ext_resource type="Texture2D" uid="uid://bp6jqrdv1pam4" path="res://Asset/montage/Montage_Blindbox_B_0005.png" id="6_80qix"]
+[ext_resource type="Texture2D" uid="uid://bcm2gu5oxx6ia" path="res://Asset/montage/Montage_Blindbox_B_0006.png" id="7_ljbur"]
+[ext_resource type="Texture2D" uid="uid://ch06qtagq157d" path="res://Asset/montage/Montage_Blindbox_B_0007.png" id="8_71oov"]
+[ext_resource type="Texture2D" uid="uid://fiu38jiebkd3" path="res://Asset/montage/Montage_Blindbox_B_0008.png" id="9_7my08"]
+[ext_resource type="Texture2D" uid="uid://ya6meh3c0ge8" path="res://Asset/montage/Montage_Blindbox_B_0009.png" id="10_ritum"]
+[ext_resource type="Texture2D" uid="uid://cne6yqhm0d0eq" path="res://Asset/montage/Montage_Blindbox_B_0010.png" id="11_6c4nx"]
+[ext_resource type="Texture2D" uid="uid://cftqbuu5nlwua" path="res://Asset/montage/Montage_Blindbox_B_0011.png" id="12_wc3oc"]
+[ext_resource type="Texture2D" uid="uid://dmcldt5wu68sr" path="res://Asset/montage/Montage_Blindbox_B_0012.png" id="13_s0bup"]
+[ext_resource type="Texture2D" uid="uid://bdekclcq37jnq" path="res://Asset/montage/Montage_Blindbox_B_0013.png" id="14_kfiu3"]
+[ext_resource type="Texture2D" uid="uid://cg8v05vv34nyx" path="res://Asset/montage/Montage_Blindbox_B_0014.png" id="15_adyqh"]
+[ext_resource type="Texture2D" uid="uid://dlq2f7h5v6teg" path="res://Asset/montage/Montage_Blindbox_B_0015.png" id="16_6gp4h"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7l6wx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_u1bia")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5o2qo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_gerv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xeddt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_80qix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ljbur")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_71oov")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7my08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ritum")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_6c4nx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wc3oc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_s0bup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_kfiu3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_adyqh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6gp4h")
+}],
+"loop": true,
+"name": &"b",
+"speed": 5.0
+}]
