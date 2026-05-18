@@ -9,6 +9,8 @@ const STAR_TEXTURE = preload("res://Asset/font/Crane_RarityStars.png")
 @onready var back_button: TextureButton = $Panel/VLayout/BackButton
 @onready var stars: HBoxContainer = $Panel/VLayout/RarityStars
 
+var _reward_texture_cache: Dictionary = {}
+
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
 	visible = false
@@ -16,8 +18,8 @@ func _ready():
 func show_result() -> void:
 	var reward = PoolsRewards.get_random_reward()
 	
-	var res_path = reward["texture_path"]
-	var tex = load(res_path)
+	var res_path: String = reward["texture_path"]
+	var tex := _get_cached_reward_texture(res_path)
 	var display_name = reward["name"].capitalize()
 	
 	item_name.text = display_name
@@ -26,6 +28,14 @@ func show_result() -> void:
 	_update_stars(reward["rarity"])
 	
 	visible = true
+
+func _get_cached_reward_texture(path: String) -> Texture2D:
+	if _reward_texture_cache.has(path):
+		return _reward_texture_cache[path]
+	var loaded := load(path) as Texture2D
+	if loaded != null:
+		_reward_texture_cache[path] = loaded
+	return loaded
 
 func _update_stars(rarity: int) -> void:
 	for child in stars.get_children():

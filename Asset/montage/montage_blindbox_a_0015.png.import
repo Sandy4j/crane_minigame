@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buw07ghg0b5xu"
-path="res://.godot/imported/montage_blindbox_a_0015.png-4cf1909a932322f686d668fe35d702e3.ctex"
+uid="uid://cxa1mljsf7i01"
+path="res://.godot/imported/Montage_Blindbox_A_0015.png-a163ffbf5c9f4a5df8a5673dbe31e512.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/montage/montage_blindbox_a_0015.png"
-dest_files=["res://.godot/imported/montage_blindbox_a_0015.png-4cf1909a932322f686d668fe35d702e3.ctex"]
+source_file="res://Asset/montage/Montage_Blindbox_A_0015.png"
+dest_files=["res://.godot/imported/Montage_Blindbox_A_0015.png-a163ffbf5c9f4a5df8a5673dbe31e512.ctex"]
 
 [params]
 

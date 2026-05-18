@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=66 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
@@ -35,28 +35,14 @@
 [ext_resource type="Shader" path="res://UI/Shader/Box_Highlight.gdshader" id="19_ajchn"]
 [ext_resource type="Script" path="res://UI/CraneMachinePopup.gd" id="20_v6juf"]
 [ext_resource type="Script" path="res://Scripts/VFXManager.gd" id="23_vfx01"]
-[ext_resource type="Texture2D" uid="uid://hwfermc8grsr" path="res://Asset/montage/montage_blindbox_a_0000.png" id="28_3tn4s"]
+[ext_resource type="Texture2D" uid="uid://rq87nsewdhkt" path="res://Asset/Crane_Sticker_Glass.png" id="23_ydrjr"]
 [ext_resource type="FontFile" uid="uid://dvaiuc32aidnv" path="res://Asset/font/bistrobits.fnt" id="28_rin62"]
 [ext_resource type="Texture2D" uid="uid://42kvbnoypryt" path="res://Asset/font/ui_popup_button_small.png" id="29_7xhpa"]
-[ext_resource type="Texture2D" uid="uid://xeuksubbwjqo" path="res://Asset/montage/montage_blindbox_a_0001.png" id="29_c4mwt"]
 [ext_resource type="Script" path="res://UI/CraneResult.gd" id="30_1lhj6"]
-[ext_resource type="Texture2D" uid="uid://bqaqxf7v7c0fo" path="res://Asset/montage/montage_blindbox_a_0002.png" id="30_oima2"]
-[ext_resource type="Texture2D" uid="uid://cgttxflk3l3u4" path="res://Asset/montage/montage_blindbox_a_0003.png" id="31_lt7af"]
 [ext_resource type="Script" path="res://UI/montage_blindboxopen.gd" id="31_wif3s"]
 [ext_resource type="Script" path="res://UI/CraneEmpty.gd" id="32_3fryq"]
 [ext_resource type="Script" path="res://UI/ControlButtons.gd" id="32_ctrlb"]
-[ext_resource type="Texture2D" uid="uid://btdjeiwbe4sw7" path="res://Asset/montage/montage_blindbox_a_0004.png" id="32_nhm28"]
-[ext_resource type="Texture2D" uid="uid://dmdyv1cpbpo3d" path="res://Asset/montage/montage_blindbox_a_0005.png" id="33_0rnnr"]
-[ext_resource type="Texture2D" uid="uid://oyyohee5vh3e" path="res://Asset/montage/montage_blindbox_a_0006.png" id="34_7278x"]
-[ext_resource type="Texture2D" uid="uid://d13ccuijrbj78" path="res://Asset/montage/montage_blindbox_a_0007.png" id="35_dvd03"]
-[ext_resource type="Texture2D" uid="uid://cmgfnnw7a31jo" path="res://Asset/montage/montage_blindbox_a_0008.png" id="36_0rc4p"]
-[ext_resource type="Texture2D" uid="uid://bfvuubmiu0k5e" path="res://Asset/montage/montage_blindbox_a_0009.png" id="37_wtm4r"]
-[ext_resource type="Texture2D" uid="uid://b6gf5l2168ta8" path="res://Asset/montage/montage_blindbox_a_0010.png" id="38_vlq58"]
-[ext_resource type="Texture2D" uid="uid://csufx6lhlk0hp" path="res://Asset/montage/montage_blindbox_a_0011.png" id="39_204rr"]
-[ext_resource type="Texture2D" uid="uid://be3dtveoels" path="res://Asset/montage/montage_blindbox_a_0012.png" id="40_hj5se"]
-[ext_resource type="Texture2D" uid="uid://7bvtxjknhlri" path="res://Asset/montage/montage_blindbox_a_0013.png" id="41_j84mw"]
-[ext_resource type="Texture2D" uid="uid://dorku7u7li4wu" path="res://Asset/montage/montage_blindbox_a_0014.png" id="42_viavn"]
-[ext_resource type="Texture2D" uid="uid://buw07ghg0b5xu" path="res://Asset/montage/montage_blindbox_a_0015.png" id="43_vuwcb"]
+[ext_resource type="SpriteFrames" uid="uid://dnipmvped1w18" path="res://UI/MontageSpriteFrames/Box_A.tres" id="36_s787s"]
 [ext_resource type="Shader" path="res://UI/Shader/speedlines.gdshader" id="45_ej7dx"]
 [ext_resource type="Texture2D" uid="uid://bbgajjqd0ucp4" path="res://Asset/font/ui_interaction_item_bg.png" id="57_goqs6"]
 [ext_resource type="PackedScene" uid="uid://bwcn6dusc8ato" path="res://main_menu.tscn" id="62_3e5tk"]
@@ -211,62 +197,6 @@ _data = {
 "default": SubResource("Animation_m0doe")
 }
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ombm6"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("28_3tn4s")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_c4mwt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_oima2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_lt7af")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_nhm28")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_0rnnr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34_7278x")
-}, {
-"duration": 1.0,
-"texture": ExtResource("35_dvd03")
-}, {
-"duration": 1.0,
-"texture": ExtResource("36_0rc4p")
-}, {
-"duration": 1.0,
-"texture": ExtResource("37_wtm4r")
-}, {
-"duration": 1.0,
-"texture": ExtResource("38_vlq58")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39_204rr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40_hj5se")
-}, {
-"duration": 1.0,
-"texture": ExtResource("41_j84mw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("42_viavn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("43_vuwcb")
-}],
-"loop": true,
-"name": &"a",
-"speed": 5.0
-}]
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_mhyxd"]
 frequency = 0.0317
 
@@ -309,6 +239,7 @@ texture = ExtResource("4_yny2s")
 [node name="Glass" type="Sprite2D" parent="Inner"]
 z_index = 6
 z_as_relative = false
+position = Vector2(0, 57)
 texture = ExtResource("4_qpvyu")
 
 [node name="EmptyLabel" type="Sprite2D" parent="Inner"]
@@ -391,6 +322,11 @@ z_as_relative = false
 position = Vector2(0, 20)
 sprite_frames = SubResource("SpriteFrames_arpgf")
 frame_progress = 0.45545
+
+[node name="Sticker" type="Sprite2D" parent="Inner"]
+z_as_relative = false
+position = Vector2(-109, 85)
+texture = ExtResource("23_ydrjr")
 
 [node name="CraneTrain" type="Node2D" parent="."]
 z_index = 2
@@ -518,7 +454,7 @@ grow_vertical = 2
 color = Color(0.711821, 0.210279, 0.482828, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Montage/montage_blindboxopen"]
-sprite_frames = SubResource("SpriteFrames_ombm6")
+sprite_frames = ExtResource("36_s787s")
 animation = &"a"
 frame = 1
 

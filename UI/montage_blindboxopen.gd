@@ -1,44 +1,45 @@
 extends Node2D
 
+const MONTAGE_FRAMES_PATHS := {
+	"a": "res://UI/MontageSpriteFrames/Box_A.tres",
+	"b": "res://UI/MontageSpriteFrames/Box_B.tres",
+	"c": "res://UI/MontageSpriteFrames/Box_C.tres",
+	"d": "res://UI/MontageSpriteFrames/Box_D.tres",
+}
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dim: ColorRect = $"../Dimmer"
+
+var _montage_frames_cache: Dictionary = {}
 
 func _get_box_letter(texture: Texture2D) -> String:
 	if texture == null:
 		return "a"
 	var path = texture.resource_path.to_lower()
-	if "box_a" in path: return "a"
-	if "box_b" in path: return "b"
-	if "box_c" in path: return "c"
-	if "box_d" in path: return "d"
+	if "box_a" in path:
+		return "a"
+	if "box_b" in path:
+		return "b"
+	if "box_c" in path:
+		return "c"
+	if "box_d" in path:
+		return "d"
 	return "a"
 
+func _get_montage_frames(letter: String) -> SpriteFrames:
+	if not _montage_frames_cache.has(letter):
+		var path: String = MONTAGE_FRAMES_PATHS.get(letter, MONTAGE_FRAMES_PATHS["a"])
+		_montage_frames_cache[letter] = load(path) as SpriteFrames
+	return _montage_frames_cache[letter]
+
 func play_montage(box_texture: Texture2D = null) -> void:
-	var letter = _get_box_letter(box_texture)
-	var new_frames = SpriteFrames.new()
-	if not new_frames.has_animation("default"):
-		new_frames.add_animation("default")
-	
-	for i in range(16):
-		var frame_str = "%04d" % i
-		var tex_path = ""
-		if letter == "a":
-			tex_path = "res://Asset/montage/montage_blindbox_a_%s.png" % frame_str
-		elif letter == "b":
-			tex_path = "res://Asset/montage/Montage_Blindbox_B_%s.png" % frame_str
-		elif letter == "c":
-			tex_path = "res://Asset/montage/Montage_Blindbox_C_%s.png" % frame_str
-		elif letter == "d":
-			tex_path = "res://Asset/montage/Montage_Blindbox_D_%s.png" % frame_str
-			
-		var tex = load(tex_path)
-		if tex != null:
-			new_frames.add_frame("default", tex)
-	
-	animated_sprite.sprite_frames = new_frames
-	animated_sprite.animation = "default"
-	
+	var letter := _get_box_letter(box_texture)
+	var frames := _get_montage_frames(letter)
+	animated_sprite.sprite_frames = frames
+	animated_sprite.animation = letter
+	animated_sprite.frame = 0
+
 	show()
 	dim.visible = true
 	AudioManager.play_sfx("montage")
