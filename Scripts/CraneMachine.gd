@@ -131,8 +131,7 @@ func start_pending_session() -> void:
 
 ## Cek apakah ada box yang kosong
 func _check_boxes() -> void:
-	var boxes = get_tree().get_nodes_in_group("box")
-	if boxes.size() == 0:
+	if not boxes_con.has_boxes():
 		is_empty = true
 		empty_label.visible = true
 		machine_empty.emit()

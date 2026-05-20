@@ -15,6 +15,7 @@ var movement_tween: Tween = null
 
 @onready var claw = $CraneClaw
 @onready var crane_machine = get_parent()
+@onready var boxes_node: Node2D = get_parent().get_node("Boxes")
 
 func _ready():
 	_return_to_drop_zone(false)
@@ -100,20 +101,10 @@ func _select_box(direction: int) -> void:
 
 ## Refresh daftar box yang akan dipilih
 func _refresh_box_targets() -> void:
-	var boxes := get_tree().get_nodes_in_group("box")
-	box_targets.clear()
-	for node in boxes:
-		if node is Area2D and is_instance_valid(node):
-			box_targets.append(node)
-
-	box_targets.sort_custom(func(a: Area2D, b: Area2D):
-		return a.global_position.x < b.global_position.x
-	)
-
+	box_targets = boxes_node.get_sorted_boxes()
 	if box_targets.is_empty():
 		selected_index = -1
 		return
-
 	if selected_index >= box_targets.size():
 		selected_index = box_targets.size() - 1
 	elif selected_index < -1:
@@ -121,11 +112,7 @@ func _refresh_box_targets() -> void:
 
 ## Cari index box pertama di sebelah kanan claw
 func _find_initial_index() -> int:
-	var claw_x: float = claw.global_position.x
-	for i in range(box_targets.size()):
-		if box_targets[i].global_position.x >= claw_x:
-			return i
-	return box_targets.size() - 1
+	return boxes_node.find_initial_index(box_targets, claw.global_position.x)
 
 ## Snap ke posisi box yang dipilih
 func _snap_to_selected_box() -> void:
