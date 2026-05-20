@@ -44,7 +44,7 @@ func _process(_delta):
 
 	# Sinkronisasi visual tombol saat pemain menggunakan Input Action
 	if is_idle:
-		if Input.is_action_just_pressed("left") and crane_train.selected_index >= 0:
+		if Input.is_action_just_pressed("left"):
 			left_button.button_pressed = true
 			right_button.button_pressed = false
 			grab_button.button_pressed = false

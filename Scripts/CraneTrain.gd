@@ -31,8 +31,7 @@ func _process(_delta):
 
 	if can_move and not _is_tweening() and not claw.is_busy():
 		if Input.is_action_just_pressed("left"):
-			if selected_index >= 0:
-				_select_box(-1)
+			_select_box(-1)
 		elif Input.is_action_just_pressed("right"):
 			_select_box(1)
 
@@ -82,6 +81,9 @@ func _select_box(direction: int) -> void:
 		return
 
 	if selected_index < 0:
+		if direction < 0:
+			_bump_effect(direction)
+			return
 		selected_index = _find_initial_index()
 		_try_deduct_session()
 		_snap_to_selected_box()
@@ -134,10 +136,12 @@ func _snap_to_selected_box() -> void:
 
 ## Animasi mentok saat mencoba gerak ke arah yang illegal
 func _bump_effect(direction: int) -> void:
-	if selected_index < 0 or selected_index >= box_targets.size():
+	var target_x: float = position.x
+	if selected_index >= 0 and selected_index < box_targets.size():
+		target_x = box_targets[selected_index].global_position.x - claw.position.x
+	elif selected_index >= box_targets.size():
 		return
 		
-	var target_x: float = box_targets[selected_index].global_position.x - claw.position.x
 	var bump_distance: float = 15.0
 	
 	_stop_tween()
