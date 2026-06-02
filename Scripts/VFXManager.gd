@@ -7,6 +7,7 @@ signal vfx_finished
 @onready var success_overlay: Sprite2D = $Overlay
 @onready var success_particles: GPUParticles2D = $GPUParticles2D
 @onready var failure_overlay: AnimatedSprite2D = $VFXFailure/Overlay
+@onready var _camera: CameraShake = get_tree().current_scene.get_node_or_null("Camera2D")
 
 var is_playing: bool = false
 
@@ -35,6 +36,9 @@ func play_failure_vfx() -> void:
 
 	is_playing = true
 	AudioManager.play_sfx("fanfare_failed")
+	if _camera:
+		_camera.shake()
+		print("shake")
 	failure_overlay.visible = true
 	failure_overlay.modulate.a = 0.0
 	failure_overlay.frame = 0

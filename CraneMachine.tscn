@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://dinq705c1nio0"]
+[gd_scene load_steps=67 format=3 uid="uid://dinq705c1nio0"]
 
 [ext_resource type="Script" path="res://Scripts/CraneMachine.gd" id="1_eb7fx"]
 [ext_resource type="Texture2D" uid="uid://cb4mcxm6glm5x" path="res://Asset/Crane_BG_C.png" id="2_6flr6"]
@@ -46,6 +46,7 @@
 [ext_resource type="Shader" path="res://UI/Shader/speedlines.gdshader" id="45_ej7dx"]
 [ext_resource type="Texture2D" uid="uid://bbgajjqd0ucp4" path="res://Asset/font/ui_interaction_item_bg.png" id="57_goqs6"]
 [ext_resource type="PackedScene" uid="uid://bwcn6dusc8ato" path="res://main_menu.tscn" id="62_3e5tk"]
+[ext_resource type="Script" path="res://Scripts/CameraShake.gd" id="63_shake"]
 
 [sub_resource type="Curve" id="Curve_cl54m"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -219,6 +220,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_u1wje")
 
 [node name="CraneMachine" type="Node2D"]
 script = ExtResource("1_eb7fx")
+success_chance = 0.04
 
 [node name="BG" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -818,6 +820,7 @@ vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, -70)
+script = ExtResource("63_shake")
 
 [connection signal="pressed" from="Inner/ButtonMachine/Control/LeftBtn" to="Inner/ButtonMachine/Control" method="_on_left_btn_pressed"]
 [connection signal="pressed" from="Inner/ButtonMachine/Control/RightBtn" to="Inner/ButtonMachine/Control" method="_on_right_btn_pressed"]
