@@ -1,5 +1,6 @@
 extends Control
 
+signal exit_requested
 
 @onready var camera = $"../Camera2D"
 @onready var panel = $Panel
@@ -24,4 +25,4 @@ func _on_play_btn_pressed():
 	)
 
 func _on_exit_btn_pressed():
-	get_tree().quit()
+	exit_requested.emit()

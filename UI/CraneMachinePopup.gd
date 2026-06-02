@@ -5,6 +5,8 @@ extends Control
 @onready var start_button: TextureButton = $Panel/VLayout/ButtonRow/StartButton
 @onready var exit_button: TextureButton = $Panel/VLayout/ButtonRow/ExitButton
 
+signal exit_requested
+
 var _machine: CraneMachine
 
 func _ready():
@@ -41,4 +43,4 @@ func _on_start_pressed() -> void:
 	_machine.try_start_session()
 
 func _on_exit_pressed() -> void:
-	get_tree().quit()
+	exit_requested.emit()

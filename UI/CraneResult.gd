@@ -1,6 +1,7 @@
 extends Control
 
 signal result_closed
+signal reward_collected(reward_data: Dictionary)
 
 const STAR_TEXTURE = preload("res://Asset/font/Crane_RarityStars.png")
 
@@ -10,22 +11,23 @@ const STAR_TEXTURE = preload("res://Asset/font/Crane_RarityStars.png")
 @onready var stars: HBoxContainer = $Panel/VLayout/RarityStars
 
 var _reward_texture_cache: Dictionary = {}
+var _current_reward: Dictionary = {}
 
 func _ready():
 	back_button.pressed.connect(_on_back_pressed)
 	visible = false
 
 func show_result() -> void:
-	var reward = PoolsRewards.get_random_reward()
+	_current_reward = PoolsRewards.get_random_reward()
 	
-	var res_path: String = reward["texture_path"]
+	var res_path: String = _current_reward["texture_path"]
 	var tex := _get_cached_reward_texture(res_path)
-	var display_name = reward["name"].capitalize()
+	var display_name = _current_reward["name"].capitalize()
 	
 	item_name.text = display_name
 	item_image.texture = tex
 	
-	_update_stars(reward["rarity"])
+	_update_stars(_current_reward["rarity"])
 	
 	visible = true
 
@@ -55,4 +57,7 @@ func _input(event):
 
 func _on_back_pressed() -> void:
 	visible = false
+	if not _current_reward.is_empty():
+		reward_collected.emit(_current_reward)
+		_current_reward = {}
 	result_closed.emit()

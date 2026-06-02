@@ -9,12 +9,14 @@ var session_active: bool = false
 var is_empty: bool = false
 var has_played_once: bool = false
 var pending_session: bool = false
+var collected_rewards: Array[Dictionary] = []
 
 signal session_started
 signal session_failed_no_aurum
 signal session_ended
 signal aurum_changed(new_amount)
 signal machine_empty
+signal session_finished(rewards: Array)
 
 @onready var train = $CraneTrain
 @onready var claw = $CraneTrain/CraneClaw
@@ -31,6 +33,9 @@ func _ready():
 	claw.grab_failed.connect(_on_grab_failed)
 	claw.box_dropped.connect(_on_box_dropped)
 	result.result_closed.connect(_on_result_closed)
+	result.reward_collected.connect(_on_reward_collected)
+	popup.exit_requested.connect(_on_exit_requested)
+	empty.exit_requested.connect(_on_exit_requested)
 	
 	montage.visible = false
 	boxes_con.randomize_boxes()
@@ -39,6 +44,10 @@ func _ready():
 
 	_load_config()
 	aurum_changed.emit(aurum)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_TAB:
+		_print_collected_rewards()
 
 func trigger_initial_popup() -> void:
 	if not session_active:
@@ -160,3 +169,19 @@ func _on_box_dropped() -> void:
 func _on_grab_failed() -> void:
 	vfx_manager.play_failure_vfx()
 	end_session()
+
+## Akumulasi reward tiap kali result popup ditutup
+func _on_reward_collected(reward: Dictionary) -> void:
+	var data := reward.duplicate()
+	data.erase("texture_path")
+	collected_rewards.append(data)
+
+
+func _on_exit_requested() -> void:
+	session_finished.emit(collected_rewards)
+	## TODO: Fungsi ini untuk menyimpan reward yang diambil
+	get_tree().quit()
+	
+
+func _print_collected_rewards() -> void:
+		print(collected_rewards)
